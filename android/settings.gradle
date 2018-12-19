@@ -1,0 +1,3 @@
+rootProject.name = 'conex_native'
+
+include ':app'
