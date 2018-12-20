@@ -9,6 +9,7 @@ import {
 import Input from '../components/input'
 import Button from '../components/button'
 import theme from '../theme'
+
 class LoginScreen extends Component {
   constructor (props) {
     super(props)
@@ -37,7 +38,7 @@ class LoginScreen extends Component {
         </View>
         <Button style={styles.button} text='Ingresar' textStyle={styles.buttonText} />
         <View style={styles.footer}>
-          <Text>Más Información</Text>
+          <Text style={[styles.text, styles.footerText]}>Màs Informaciòn</Text>
         </View>
       </View>
     )
@@ -52,9 +53,12 @@ const styles = StyleSheet.create({
     flex: 1
   },
   container: {
-    marginTop: 50,
     paddingHorizontal: 15,
-    flex: 1
+    flex: 1,
+    backgroundColor: theme.colors.blue
+  },
+  containerImage: {
+    marginTop: 50
   },
   image: {
     height: 80,
@@ -97,11 +101,15 @@ const styles = StyleSheet.create({
     fontSize: theme.sizes.subTitle
   },
   footer: {
-    backgroundColor: 'red',
+    backgroundColor: theme.colors.lightBlue,
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
     height: 60
+  },
+  footerText: {
+    textAlignVertical: 'center',
+    flex: 1
   }
 })

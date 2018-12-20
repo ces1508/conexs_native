@@ -7,10 +7,11 @@
  */
 
 import React, { Component } from 'react'
-// import { Platform, StyleSheet, Text, View } from 'react-native'
-import LoginScreen from './src/pages/login'
+import Stack from './src/navigation'
+import { createAppContainer } from 'react-navigation'
 export default class App extends Component {
   render () {
-    return <LoginScreen />
+    let Container = createAppContainer(Stack(false))
+    return <Container />
   }
 }
