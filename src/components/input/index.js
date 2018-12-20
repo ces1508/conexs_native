@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import {
   View,
   Text,
-  TextInput,
-  StyleSheet
+  TextInput
 } from 'react-native'
 
 const Input = props => {
@@ -42,9 +41,5 @@ Input.defaultProps = {
   name: 'example',
   handleText: text => console.warn(`{this.name}: ${text}`)
 }
-
-const styles = StyleSheet.create({
-
-})
 
 export default Input
