@@ -1,7 +1,27 @@
-import { createStackNavigator } from 'react-navigation'
+import { createStackNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation'
 import {
-  LoginScreen
+  LoginScreen,
+  PolizasScreen,
+  SoatsScreen
 } from '../pages'
+
+const Tabs = createBottomTabNavigator(
+  {
+    polizas: PolizasScreen,
+    soats: SoatsScreen
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => {
+      let { routeName } = navigation.state
+      let label = routeName === 'polizas' ? 'Polizas' : 'Soats'
+      return {
+        tabBarLabel: label
+      }
+    }
+  }
+)
+
+const TabsNavigator = createAppContainer(Tabs)
 
 const Stack = (isAuthenticate = false) => {
   return createStackNavigator(
@@ -11,11 +31,17 @@ const Stack = (isAuthenticate = false) => {
         navigationOptions: {
           header: null
         }
+      },
+      polizas: {
+        screen: Tabs,
+        navigationOptions: {
+          title: 'Polizas'
+        }
       }
     },
     {
       headerMode: 'screen',
-      initialRouteName: isAuthenticate ? 'login' : 'login'
+      initialRouteName: isAuthenticate ? 'login' : 'polizas'
     }
   )
 }

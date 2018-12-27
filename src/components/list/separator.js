@@ -3,8 +3,6 @@ import {
   View
 } from 'react-native'
 
-const Separator = props => {
-  return <View style={{ height: 15 }} />
-}
+const Separator = props => <View style={{ height: props.height || 25 }} />
 
 export default Separator

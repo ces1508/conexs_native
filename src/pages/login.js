@@ -36,7 +36,7 @@ class LoginScreen extends Component {
             handleText={(text) => this.setState({ document: text })}
           />
         </View>
-        <Button style={styles.button} text='Ingresar' textStyle={styles.buttonText} />
+        <Button style={styles.button} text='Ingresar' textStyle={styles.buttonText} onPress={() => this.props.navigation.navigate('polizas')} />
         <View style={styles.footer}>
           <Text style={[styles.text, styles.footerText]}>Màs Informaciòn</Text>
         </View>
