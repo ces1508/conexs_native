@@ -11,7 +11,7 @@ const List = props => {
       horizontal={props.horizontal}
       ListEmptyComponent={props.listEmpty}
       ListFooterComponent={props.footer}
-      ItemSeparatorComponent={props.separator || <Separator />}
+      ItemSeparatorComponent={() => props.separator || <Separator height={props.height} />}
       data={props.data}
       {...props}
     />
@@ -28,3 +28,5 @@ List.defaultProps = {
   data: [],
   horizontal: false
 }
+
+export default List

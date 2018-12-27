@@ -1,38 +1,31 @@
 import React, { Component } from 'react'
-import {
-  View,
-  Text,
-  FlatList
-} from 'react-native'
-import PolizasList from '../components/polizasList'
+import { View, Text } from 'react-native'
+import SoatList from '../components/polizasList'
 import Datasource from '../api'
+import PolizasList from '../components/polizasList';
 
-class PolizasScreen extends Component {
+export default class Soats extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      polizas: [],
-      data: []
+      soats: []
     }
   }
 
   componentDidMount () {
     this.getPolizas()
   }
+
   async getPolizas () {
     let { data, status } = await Datasource.getPolizas('36065458')
     if (data.error) {
       console.warn('tenemos un error')
     } else {
-      this.setState({ data, polizas: data.filter(item => item.formato !== 'SOAT') })
+      this.setState({ soats: data.filter(item => item.formato === 'SOAT') })
     }
   }
 
   render () {
-    return (
-      <PolizasList data={this.state.polizas} />
-    )
+    return <PolizasList data={this.state.soats} />
   }
 }
-
-export default PolizasScreen
