@@ -1,10 +1,12 @@
-import { createStackNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation'
+import React from 'react'
+import { createStackNavigator, createBottomTabNavigator, createDrawerNavigator } from 'react-navigation'
 import {
   LoginScreen,
   PolizasScreen,
-  SoatsScreen
+  SoatsScreen,
+  MenuScreen
 } from '../pages'
-
+import MenuIcon from '../components/menuIcon'
 const Tabs = createBottomTabNavigator(
   {
     polizas: PolizasScreen,
@@ -21,7 +23,15 @@ const Tabs = createBottomTabNavigator(
   }
 )
 
-const TabsNavigator = createAppContainer(Tabs)
+const DrawerNavivagor = createDrawerNavigator({
+  polizas: {
+    screen: Tabs
+  }
+},
+{
+  contentComponent: MenuScreen,
+  drawerType: 'something'
+})
 
 const Stack = (isAuthenticate = false) => {
   return createStackNavigator(
@@ -33,10 +43,11 @@ const Stack = (isAuthenticate = false) => {
         }
       },
       polizas: {
-        screen: Tabs,
-        navigationOptions: {
-          title: 'Polizas'
-        }
+        screen: DrawerNavivagor,
+        navigationOptions: ({ navigation }) => ({
+          title: 'Polizas',
+          headerLeft: <MenuIcon navigation={navigation} />
+        })
       }
     },
     {

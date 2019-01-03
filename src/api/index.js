@@ -24,6 +24,9 @@ class Datasource {
   getPolizas (cedula) {
     return this.makeRequest('/list-polizas.php', 'POST', { user: cedula })
   }
+  getProfile (cedula) {
+    return this.makeRequest('/api-perfil.php', 'POST', { cedula })
+  }
 }
 
 export default new Datasource(setup)
