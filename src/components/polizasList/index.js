@@ -8,7 +8,7 @@ const PolizasList = props => (
     data={props}
     {...props}
     height={0.1}
-    renderItem={({ item }) => <Poliza {...item} />}
+    renderItem={({ item }) => <Poliza {...item} navigation={props.navigation} />}
   />
 )
 

@@ -5,6 +5,7 @@ import {
   PolizasScreen,
   SoatsScreen,
   MenuScreen
+  polizaDescription
 } from '../pages'
 import MenuIcon from '../components/menuIcon'
 const Tabs = createBottomTabNavigator(
@@ -48,6 +49,13 @@ const Stack = (isAuthenticate = false) => {
           title: 'Polizas',
           headerLeft: <MenuIcon navigation={navigation} />
         })
+        screen: Tabs,
+        navigationOptions: {
+          title: 'Polizas'
+        }
+      },
+      polizaDescription: {
+        screen: polizaDescription
       }
     },
     {

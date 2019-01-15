@@ -1,9 +1,4 @@
 import React, { Component } from 'react'
-import {
-  View,
-  Text,
-  FlatList
-} from 'react-native'
 import PolizasList from '../components/polizasList'
 import Datasource from '../api'
 
@@ -20,7 +15,7 @@ class PolizasScreen extends Component {
     this.getPolizas()
   }
   async getPolizas () {
-    let { data, status } = await Datasource.getPolizas('36065458')
+    let { data } = await Datasource.getPolizas('36065458')
     if (data.error) {
       console.warn('tenemos un error')
     } else {
@@ -30,7 +25,7 @@ class PolizasScreen extends Component {
 
   render () {
     return (
-      <PolizasList data={this.state.polizas} />
+      <PolizasList data={this.state.polizas} navigation={this.props.navigation} />
     )
   }
 }

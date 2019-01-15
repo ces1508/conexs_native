@@ -26,6 +26,6 @@ export default class Soats extends Component {
   }
 
   render () {
-    return <PolizasList data={this.state.soats} />
+    return <PolizasList data={this.state.soats} navigation={this.props.navigation} />
   }
 }
