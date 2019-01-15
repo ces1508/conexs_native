@@ -137,10 +137,12 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-immediate-phone-call')
     compile project(':react-native-vector-icons')
     compile project(':react-native-gesture-handler')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+    implementation project(':react-native-immediate-phone-call')
     implementation "com.facebook.react:react-native:+"  // From node_modules
 }
 
