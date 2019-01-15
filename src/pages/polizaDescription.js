@@ -4,12 +4,17 @@ import {
   View,
   Text,
   TouchableHighlight,
-  StyleSheet
+  StyleSheet,
+  PermissionsAndroid,
+  Alert,
+  Platform
 } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import DescriptionItem from '../components/description'
 import theme from '../theme'
 import Datasource from '../api'
+import RNImmediateCall from 'react-native-immediate-phone-call'
+import { permissions } from '../utils'
 
 class PolizaDescription extends Component {
   constructor(props) {
@@ -48,13 +53,30 @@ class PolizaDescription extends Component {
     let description = { Titular: titular, Poliza: poliza, 'CC/Nit': cedula_nit, Placa: placas, tipo: tipo_poliza }
     return Object.keys(description).map((key, index) => <DescriptionItem title={key} value={description[key]} key={`${key}-${index}`} />)
   }
+  async makeCallPhone () {
+    if (Platform.OS === 'android') {
+      let payload = {
+        title: "Necesitamos el Permiso, para poder realizar la llamada",
+        message: 'con este permiso, te comunicaremos directamente con la entidad que presta el seguro.'
+      }
+      let hasPermission = await permissions(PermissionsAndroid.PERMISSIONS.CALL_PHONE, payload)
+      if (hasPermission) {
+        return RNImmediateCall.immediatePhoneCall('3203230522')
+      } else {
+        return Alert.alert(
+          'Lo Sentimos...',
+          'No podimos iniciar la llamada debido a que no has aceptado el permiso'
+        )
+      }
+    }
+    return RNImmediateCall.immediatePhoneCall('3203230522')
+  }
   render () {
     let poliza = this.props.navigation.state.params
-    console.log(poliza)
     return (
       <ScrollView>
         <TouchableHighlight
-          onPress={() => console.log('llamar a la aseguradora')}
+          onPress={this.makeCallPhone}
           underlayColor='rgba(100,0,0,0.3)'
           style={[styles.callContainer, { backgroundColor: poliza.estado === 'ACTIVO' ? 'green' : 'red' }]}>
           <View>
