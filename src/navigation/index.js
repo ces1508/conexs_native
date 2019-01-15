@@ -4,7 +4,7 @@ import {
   LoginScreen,
   PolizasScreen,
   SoatsScreen,
-  MenuScreen
+  MenuScreen,
   polizaDescription
 } from '../pages'
 import MenuIcon from '../components/menuIcon'
@@ -44,15 +44,11 @@ const Stack = (isAuthenticate = false) => {
         }
       },
       polizas: {
-        screen: DrawerNavivagor,
         navigationOptions: ({ navigation }) => ({
           title: 'Polizas',
           headerLeft: <MenuIcon navigation={navigation} />
-        })
-        screen: Tabs,
-        navigationOptions: {
-          title: 'Polizas'
-        }
+        }),
+        screen: DrawerNavivagor
       },
       polizaDescription: {
         screen: polizaDescription

@@ -26,6 +26,7 @@ class Datasource {
   }
   getProfile (cedula) {
     return this.makeRequest('/api-perfil.php', 'POST', { cedula })
+  }
   hasSinisters (poliza) {
     return this.makeRequest('/count_siniestros.php', 'get', {}, { poliza })
   }
