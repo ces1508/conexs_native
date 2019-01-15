@@ -137,7 +137,7 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-immediate-phone-call')
+    compile project(':react-native-immediate-phone-call'
     compile project(':react-native-vector-icons')
     compile project(':react-native-gesture-handler')
     implementation fileTree(dir: "libs", include: ["*.jar"])
