@@ -2,7 +2,8 @@ import { createStackNavigator, createBottomTabNavigator, createAppContainer } fr
 import {
   LoginScreen,
   PolizasScreen,
-  SoatsScreen
+  SoatsScreen,
+  polizaDescription
 } from '../pages'
 
 const Tabs = createBottomTabNavigator(
@@ -21,8 +22,6 @@ const Tabs = createBottomTabNavigator(
   }
 )
 
-const TabsNavigator = createAppContainer(Tabs)
-
 const Stack = (isAuthenticate = false) => {
   return createStackNavigator(
     {
@@ -37,6 +36,9 @@ const Stack = (isAuthenticate = false) => {
         navigationOptions: {
           title: 'Polizas'
         }
+      },
+      polizaDescription: {
+        screen: polizaDescription
       }
     },
     {

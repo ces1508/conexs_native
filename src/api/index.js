@@ -24,6 +24,9 @@ class Datasource {
   getPolizas (cedula) {
     return this.makeRequest('/list-polizas.php', 'POST', { user: cedula })
   }
+  hasSinisters (poliza) {
+    return this.makeRequest('/count_siniestros.php', 'get', {}, { poliza })
+  }
 }
 
 export default new Datasource(setup)
