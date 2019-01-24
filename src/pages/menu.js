@@ -4,12 +4,14 @@ import {
   ScrollView,
   Text,
   Image,
-  StyleSheet
+  StyleSheet,
+  TouchableOpacity
 } from 'react-native'
 import { SafeAreaView } from 'react-navigation'
 import Datasource from '../api'
 import theme from '../theme'
-import { getItem } from '../utils'
+import { getItem, logout } from '../utils'
+
 class MenuScreen extends Component {
   constructor (props) {
     super(props)
@@ -41,7 +43,6 @@ class MenuScreen extends Component {
   async componentDidMount () {
     let user = await getItem('@user')
     if (!user.hasOwnProperty('error')) {
-      console.log(user)
       this.getProfile(user.item)
     }
     return null
@@ -71,7 +72,9 @@ class MenuScreen extends Component {
                 <Text style={[styles.poliza, styles.inactive]}>{profile.inactives}</Text>
               </View>
             </View>
-            <Text style={[styles.singout, styles.text]}>Salir</Text>
+            <TouchableOpacity onPress={() => logout(this.props.navigation)}>
+              <Text style={[styles.singout, styles.text]}>Salir</Text>
+            </TouchableOpacity>
           </View>
         </SafeAreaView>
       </ScrollView>

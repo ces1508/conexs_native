@@ -10,7 +10,7 @@ const mapsDispatchToProps = {
 
 class Soats extends Component {
   render () {
-    let { soats } = this.props.soats
+    let { soats } = this.props
     return <PolizasList data={soats} navigation={this.props.navigation} />
   }
 }
