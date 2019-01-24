@@ -1,6 +1,14 @@
 import React, { Component } from 'react'
 import PolizasList from '../components/polizasList'
 import Datasource from '../api'
+import { getItem } from '../utils'
+import { connect } from 'react-redux'
+import { getPolizas } from '../actions/polizas/creators'
+
+const mapStateToProps = state => ({ ...state.polizas })
+const mapDispatchToProps = {
+  getPolizas
+}
 
 class PolizasScreen extends Component {
   constructor (props) {
@@ -11,23 +19,22 @@ class PolizasScreen extends Component {
     }
   }
 
-  componentDidMount () {
+  async componentDidMount () {
     this.getPolizas()
   }
   async getPolizas () {
-    let { data } = await Datasource.getPolizas('36065458')
-    if (data.error) {
-      console.warn('tenemos un error')
-    } else {
-      this.setState({ data, polizas: data.filter(item => item.formato !== 'SOAT') })
+    let user = await getItem('@user')
+    if (!user.hasOwnProperty('error')) {
+      this.props.getPolizas(user.item)
     }
   }
 
   render () {
+    let { polizas } = this.props
     return (
-      <PolizasList data={this.state.polizas} navigation={this.props.navigation} />
+      <PolizasList data={polizas} navigation={this.props.navigation} />
     )
   }
 }
 
-export default PolizasScreen
+export default connect(mapStateToProps, mapDispatchToProps)(PolizasScreen)

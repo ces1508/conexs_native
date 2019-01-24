@@ -9,6 +9,7 @@ import {
 import { SafeAreaView } from 'react-navigation'
 import Datasource from '../api'
 import theme from '../theme'
+import { getItem } from '../utils'
 class MenuScreen extends Component {
   constructor (props) {
     super(props)
@@ -18,7 +19,8 @@ class MenuScreen extends Component {
   }
 
   async getProfile (cedula) {
-    let { data, status } = await Datasource.getProfile('36065458')
+    let { data, status } = await Datasource.getProfile(cedula)
+    console.log(data)
     if (status === 200) {
       let actives = data.filter(item => item.estado === 'ACTIVO').reduce((prev, current) => {
         return prev + 1
@@ -36,8 +38,13 @@ class MenuScreen extends Component {
     }
   }
 
-  componentDidMount () {
-    this.getProfile()
+  async componentDidMount () {
+    let user = await getItem('@user')
+    if (!user.hasOwnProperty('error')) {
+      console.log(user)
+      this.getProfile(user.item)
+    }
+    return null
   }
   render () {
     let { profile } = this.state

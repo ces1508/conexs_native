@@ -21,6 +21,15 @@ class Datasource {
     }
   }
 
+  signin (user, method = 'cedula') {
+    let data = {}
+    if (method === 'cedula') {
+      data.cedula = user
+    } else {
+      data.placa = user
+    }
+    return this.makeRequest('loginapi.php', 'POST', data, { auth: method })
+  }
   getPolizas (cedula) {
     return this.makeRequest('/list-polizas.php', 'POST', { user: cedula })
   }

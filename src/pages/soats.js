@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
-import SoatList from '../components/polizasList'
 import Datasource from '../api'
-import PolizasList from '../components/polizasList';
+import PolizasList from '../components/polizasList'
+import { getItem } from '../utils'
 
 export default class Soats extends Component {
   constructor (props) {
@@ -17,7 +16,8 @@ export default class Soats extends Component {
   }
 
   async getPolizas () {
-    let { data, status } = await Datasource.getPolizas('36065458')
+    let user = await getItem('@user')
+    let { data, status } = await Datasource.getPolizas(user.item)
     if (data.error) {
       console.warn('tenemos un error')
     } else {

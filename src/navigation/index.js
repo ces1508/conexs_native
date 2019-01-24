@@ -35,6 +35,7 @@ const DrawerNavivagor = createDrawerNavigator({
 })
 
 const Stack = (isAuthenticate = false) => {
+  console.log(isAuthenticate)
   return createStackNavigator(
     {
       login: {
@@ -56,7 +57,7 @@ const Stack = (isAuthenticate = false) => {
     },
     {
       headerMode: 'screen',
-      initialRouteName: isAuthenticate ? 'login' : 'polizas'
+      initialRouteName: isAuthenticate ? 'polizas' : 'login'
     }
   )
 }
