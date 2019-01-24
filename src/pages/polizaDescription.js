@@ -51,7 +51,9 @@ class PolizaDescription extends Component {
   renderDescription () {
     let { titular, cedula_nit, placas, tipo_poliza, poliza } = this.props.navigation.state.params
     let description = { Titular: titular, Poliza: poliza, 'CC/Nit': cedula_nit, Placa: placas, tipo: tipo_poliza }
-    return Object.keys(description).map((key, index) => <DescriptionItem title={key} value={description[key]} key={`${key}-${index}`} />)
+    return Object.keys(description).map((key, index) => (
+      <DescriptionItem title={key} value={description[key]} key={`${key}-${index}`} />
+    ))
   }
   async makeCallPhone () {
     if (Platform.OS === 'android') {
@@ -107,7 +109,11 @@ const styles = StyleSheet.create({
   },
   containerDescription: {
     paddingHorizontal: 10,
-    paddingVertical: 10
+    paddingVertical: 10,
+    elevation: 3,
+    borderRadius: 5,
+    marginHorizontal: 10,
+    marginVertical: 10
   },
   Descriptiontitle: {
     fontSize: theme.sizes.text,

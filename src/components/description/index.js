@@ -34,7 +34,6 @@ const Body = props => (
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    flex: 1,
     paddingVertical: 8
   },
   text: {
