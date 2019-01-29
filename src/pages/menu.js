@@ -11,6 +11,13 @@ import { SafeAreaView } from 'react-navigation'
 import Datasource from '../api'
 import theme from '../theme'
 import { getItem, logout } from '../utils'
+import { connect } from 'react-redux'
+import { clean } from '../actions/login'
+
+const mapStateToProps = state => state
+const mapDispatchToProps = {
+  clean
+}
 
 class MenuScreen extends Component {
   constructor (props) {
@@ -18,6 +25,7 @@ class MenuScreen extends Component {
     this.state = {
       profile: {}
     }
+    this.handleLogout = this.handleLogout.bind(this)
   }
 
   async getProfile (cedula) {
@@ -47,6 +55,10 @@ class MenuScreen extends Component {
     }
     return null
   }
+  handleLogout () {
+    this.props.clean()
+    logout(this.props.navigation)
+  }
   render () {
     let { profile } = this.state
     return (
@@ -72,7 +84,7 @@ class MenuScreen extends Component {
                 <Text style={[styles.poliza, styles.inactive]}>{profile.inactives}</Text>
               </View>
             </View>
-            <TouchableOpacity onPress={() => logout(this.props.navigation)}>
+            <TouchableOpacity onPress={() => this.handleLogout()}>
               <Text style={[styles.singout, styles.text]}>Salir</Text>
             </TouchableOpacity>
           </View>
@@ -82,7 +94,7 @@ class MenuScreen extends Component {
   }
 }
 
-export default MenuScreen
+export default connect(mapStateToProps, mapDispatchToProps)(MenuScreen)
 
 const styles = StyleSheet.create({
   userInformation: {

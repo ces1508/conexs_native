@@ -2,7 +2,8 @@ import {
   HANDLE_INPUT,
   ERROR_LOGIN,
   ON_FETCHING,
-  SUCCESS_LOGIN
+  SUCCESS_LOGIN,
+  CLEAN
 } from '../actions/login'
 
 const initialState = {
@@ -36,6 +37,10 @@ export default function LoginReducers (state = initialState, action) {
         ...state,
         onFetching: false,
         error: action.error
+      }
+    case CLEAN:
+      return {
+        ...initialState
       }
     default:
       return state
