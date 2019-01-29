@@ -4,21 +4,33 @@ import {
   ScrollView,
   Text,
   Image,
-  StyleSheet
+  StyleSheet,
+  TouchableOpacity
 } from 'react-native'
 import { SafeAreaView } from 'react-navigation'
 import Datasource from '../api'
 import theme from '../theme'
+import { getItem, logout } from '../utils'
+import { connect } from 'react-redux'
+import { clean } from '../actions/login'
+
+const mapStateToProps = state => state
+const mapDispatchToProps = {
+  clean
+}
+
 class MenuScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
       profile: {}
     }
+    this.handleLogout = this.handleLogout.bind(this)
   }
 
   async getProfile (cedula) {
-    let { data, status } = await Datasource.getProfile('36065458')
+    let { data, status } = await Datasource.getProfile(cedula)
+    console.log(data)
     if (status === 200) {
       let actives = data.filter(item => item.estado === 'ACTIVO').reduce((prev, current) => {
         return prev + 1
@@ -36,8 +48,16 @@ class MenuScreen extends Component {
     }
   }
 
-  componentDidMount () {
-    this.getProfile()
+  async componentDidMount () {
+    let user = await getItem('@user')
+    if (!user.hasOwnProperty('error')) {
+      this.getProfile(user.item)
+    }
+    return null
+  }
+  handleLogout () {
+    this.props.clean()
+    logout(this.props.navigation)
   }
   render () {
     let { profile } = this.state
@@ -64,7 +84,9 @@ class MenuScreen extends Component {
                 <Text style={[styles.poliza, styles.inactive]}>{profile.inactives}</Text>
               </View>
             </View>
-            <Text style={[styles.singout, styles.text]}>Salir</Text>
+            <TouchableOpacity onPress={() => this.handleLogout()}>
+              <Text style={[styles.singout, styles.text]}>Salir</Text>
+            </TouchableOpacity>
           </View>
         </SafeAreaView>
       </ScrollView>
@@ -72,7 +94,7 @@ class MenuScreen extends Component {
   }
 }
 
-export default MenuScreen
+export default connect(mapStateToProps, mapDispatchToProps)(MenuScreen)
 
 const styles = StyleSheet.create({
   userInformation: {

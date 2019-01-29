@@ -6,7 +6,7 @@ const Poliza = props => (
     onPress={() => props.navigation.navigate('polizaDescription', { title: `${props.tipo_poliza}-${props.aseguradora}`, ...props })} >
     <View style={styles.container}>
       <View style={styles.containerImage}>
-        <Image source={{ uri: 'https://picsum.photos/320/320?image=0' }} style={{ height: 60, width: 60 }} />
+        <Image source={{ uri: 'https://picsum.photos/320/320?image=0' }} style={styles.image} />
       </View>
       <View style={styles.containerText}>
         <Text style={styles.text}>Estado:
@@ -25,13 +25,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    borderBottomColor: 'gray',
-    borderBottomWidth: 2,
     paddingVertical: 10
   },
   containerImage: {
     paddingHorizontal: 10,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    borderRadius: 50,
+    overflow: 'hidden'
+  },
+  image: {
+    width: 60,
+    height: 60,
+    borderRadius: 30
   },
   containerText: {
     flexDirection: 'column',

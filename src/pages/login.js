@@ -4,19 +4,74 @@ import {
   StyleSheet,
   StatusBar,
   Image,
-  Text
+  Text,
+  Alert
 } from 'react-native'
 import Input from '../components/input'
 import Button from '../components/button'
 import theme from '../theme'
+import { connect } from 'react-redux'
+import { handleInput, login } from '../actions/login'
+import { saveItem } from '../utils'
+
+const mapStateToProps = state => state.login
+const mapDispatchToProps = {
+  handleInput,
+  login
+}
 
 class LoginScreen extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      document: ''
+    this.onSubmit = this.onSubmit.bind(this)
+    this.renderAlert = this.renderAlert.bind(this)
+    this.sendToPolizas = this.sendToPolizas.bind(this)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.successLogin) {
+      this.sendToPolizas()
+    }
+    if (nextProps.error.hasOwnProperty('error')) {
+      let { error } = nextProps.error
+      if (error === 'no hay un usuario con ese numero de documento') {
+        this.renderAlert('Error !', 'por favor verifica tus datos de inicio de sesion')
+      } else {
+        return this.renderAlert('Lo sentimos!', 'Estamos presentando problemas con nuestros servidores, por favor intenta mas tarde')
+      }
     }
   }
+
+  async sendToPolizas () {
+    let user = this.props.value.split(' ')[0].toLowerCase()
+    let saveUser = await saveItem('@user', user)
+    if (!saveUser.hasOwnProperty('error')) {
+      this.props.navigation.navigate('polizas')
+    }
+  }
+
+  onSubmit () {
+    let { value } = this.props
+    const rgx = new RegExp('^[a-zA-Z]{3}[0-9]{2}[a-zA-Z0-9]?$')
+    let auth = 'cedula'
+    if (value.match(rgx)) {
+      auth = 'placa'
+    }
+    let validate = value.split(' ')
+    if (validate.length < 2) return this.renderAlert('Error', 'debes  enviar tu codigo de seguridad junto a tu documento')
+    if (validate[0].toLowerCase() === validate[1].toLowerCase()) {
+      return this.props.login(auth, validate[0].toLowerCase())
+    }
+    return this.renderAlert('Ups !', 'por favor perifica tus datos y vuelve a intentarlo')
+  }
+
+  renderAlert (title, message) {
+    return Alert.alert(
+      title,
+      message
+    )
+  }
+
   render () {
     return (
       <View style={styles.container}>
@@ -30,13 +85,13 @@ class LoginScreen extends Component {
           <Text style={styles.text}>o Placa de su vehículo</Text>
           <Input
             name={'document'}
-            value={this.state.document}
+            value={this.props.value}
             style={styles.input}
             label=''
-            handleText={(text) => this.setState({ document: text })}
+            handleText={(text) => this.props.handleInput(text)}
           />
         </View>
-        <Button style={styles.button} text='Ingresar' textStyle={styles.buttonText} onPress={() => this.props.navigation.navigate('polizas')} />
+        <Button style={styles.button} text='Ingresar' textStyle={styles.buttonText} onPress={this.onSubmit} />
         <View style={styles.footer}>
           <Text style={[styles.text, styles.footerText]}>Màs Informaciòn</Text>
         </View>
@@ -45,7 +100,7 @@ class LoginScreen extends Component {
   }
 }
 
-export default LoginScreen
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)
 
 const styles = StyleSheet.create({
   containerScroll: {

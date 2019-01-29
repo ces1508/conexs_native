@@ -1,31 +1,18 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
-import SoatList from '../components/polizasList'
-import Datasource from '../api'
-import PolizasList from '../components/polizasList';
+import PolizasList from '../components/polizasList'
+import { connect } from 'react-redux'
+import { getPolizas } from '../actions/polizas/creators'
 
-export default class Soats extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      soats: []
-    }
-  }
+const mapStateToProps = state => ({ ...state.polizas })
+const mapsDispatchToProps = {
+  getPolizas
+}
 
-  componentDidMount () {
-    this.getPolizas()
-  }
-
-  async getPolizas () {
-    let { data, status } = await Datasource.getPolizas('36065458')
-    if (data.error) {
-      console.warn('tenemos un error')
-    } else {
-      this.setState({ soats: data.filter(item => item.formato === 'SOAT') })
-    }
-  }
-
+class Soats extends Component {
   render () {
-    return <PolizasList data={this.state.soats} navigation={this.props.navigation} />
+    let { soats } = this.props
+    return <PolizasList data={soats} navigation={this.props.navigation} />
   }
 }
+
+export default connect(mapStateToProps, mapsDispatchToProps)(Soats)
