@@ -1,11 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-  FlatList
+  FlatList,
+  View
 } from 'react-native'
 import Separator from './separator'
+import { BarIndicator } from 'react-native-indicators'
+import theme from '../../theme'
 
 const List = props => {
+  if (props.onFetching) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <BarIndicator count={5} color={theme.colors.lightBlue} size={40} />
+      </View>
+    )
+  }
   return (
     <FlatList
       horizontal={props.horizontal}

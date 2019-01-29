@@ -5,7 +5,8 @@ import {
   PolizasScreen,
   SoatsScreen,
   MenuScreen,
-  polizaDescription
+  polizaDescription,
+  SiniestrosScreen
 } from '../pages'
 import MenuIcon from '../components/menuIcon'
 const Tabs = createBottomTabNavigator(
@@ -53,6 +54,12 @@ const Stack = (isAuthenticate = false) => {
       },
       polizaDescription: {
         screen: polizaDescription
+      },
+      sinisters: {
+        screen: SiniestrosScreen,
+        navigationOptions: {
+          title: 'Siniestros'
+        }
       }
     },
     {

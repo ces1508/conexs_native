@@ -6,7 +6,6 @@ import { View } from 'react-native'
 const PolizasList = props => (
   <List
     keyExtractor={(item) => item.poliza}
-    data={props}
     {...props}
     height={0.1}
     ItemSeparatorComponent={() => <Separator />}
