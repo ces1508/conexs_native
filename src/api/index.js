@@ -39,6 +39,9 @@ class Datasource {
   hasSinisters (poliza) {
     return this.makeRequest('/count_siniestros.php', 'get', {}, { poliza })
   }
+  getSinisters (poliza) {
+    return this.makeRequest('/listSiniestros.php', 'get', {}, { poliza })
+  }
 }
 
 export default new Datasource(setup)

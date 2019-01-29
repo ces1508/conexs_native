@@ -23,6 +23,7 @@ class PolizaDescription extends Component {
       sinisters: 0
     }
     this.getSinisters = this.getSinisters.bind(this)
+    this.sinisters = this.sinisters.bind(this)
   }
   static navigationOptions = ({ navigation }) => ({ title: navigation.state.params.title }) // eslint-disable-line
 
@@ -39,8 +40,9 @@ class PolizaDescription extends Component {
 
   sinisters () {
     if (this.state.sinisters > 0) {
+      let { poliza } = this.props.navigation.state.params
       return (
-        <TouchableHighlight style={styles.sinistersSection}>
+        <TouchableHighlight style={styles.sinistersSection} onPress={() => this.props.navigation.navigate('sinisters', { poliza })}>
           <Text style={styles.text}>Ver {this.state.sinisters} Siniestros </Text>
         </TouchableHighlight>
       )
