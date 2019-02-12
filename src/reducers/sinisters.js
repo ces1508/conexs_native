@@ -1,13 +1,15 @@
 import {
   ERROR_GET_SINISTERS,
   ON_FETCHING_SINISTERS,
-  SUCCESS_GET_SINISTERS
+  SUCCESS_GET_SINISTERS,
+  SET_CURRENT_SINISTER
 } from '../actions/sinisters/actions'
 
 const initialState = {
   data: [],
   onFetching: false,
-  error: null
+  error: null,
+  currentSinister: {}
 }
 
 export default function sinistersReducer (state = initialState, action) {
@@ -28,6 +30,11 @@ export default function sinistersReducer (state = initialState, action) {
         ...state,
         onFetching: false,
         data: action.data
+      }
+    case SET_CURRENT_SINISTER:
+      return {
+        ...state,
+        currentSinister: { ...action.sinister }
       }
     default:
       return state

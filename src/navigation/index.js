@@ -6,7 +6,8 @@ import {
   SoatsScreen,
   MenuScreen,
   polizaDescription,
-  SiniestrosScreen
+  SiniestrosScreen,
+  SinisterDetailScreen
 } from '../pages'
 import MenuIcon from '../components/menuIcon'
 const Tabs = createBottomTabNavigator(
@@ -60,6 +61,9 @@ const Stack = (isAuthenticate = false) => {
         navigationOptions: {
           title: 'Siniestros'
         }
+      },
+      sinisterDetail: {
+        screen: SinisterDetailScreen
       }
     },
     {
