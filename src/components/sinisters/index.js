@@ -4,7 +4,7 @@ import Sinister from './item'
 
 const SinistersList = props => (
   <List
-    renderItem={({ item }) => <Sinister {...item} navigation={props.navigation} />}
+    renderItem={({ item }) => <Sinister {...item} navigation={props.navigation} sinister={item} />}
     keyExtractor={(item) => item.num_siniestro}
     {...props}
   />
