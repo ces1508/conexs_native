@@ -9,7 +9,7 @@ class Datasource {
   async makeRequest (url, method = 'get', body = {}, params = {}, headers = {}) {
     try {
       let response = await axios({
-        method,
+        method: method,
         url: `${this.apiUrl}/${url}`,
         data: body,
         params,
