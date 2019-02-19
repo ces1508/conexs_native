@@ -29,23 +29,10 @@ class MenuScreen extends Component {
   }
 
   async getProfile (cedula) {
-    let { data, status } = await Datasource.getProfile(cedula)
-    console.log(data)
-    if (status === 200) {
-      let actives = data.filter(item => item.estado === 'ACTIVO').reduce((prev, current) => {
-        return prev + 1
-      }, 0)
-      let inactives = data.filter(item => item.estado !== 'ACTIVO').reduce((prev, current) => {
-        return prev + 1
-      }, 0)
-      this.setState({
-        profile: {
-          ...data[0],
-          inactives,
-          actives
-        }
-      })
-    }
+    let { data } = await Datasource.getProfile(cedula)
+    this.setState({
+      profile: data.profile
+    })
   }
 
   async componentDidMount () {

@@ -12,38 +12,18 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import DescriptionItem from '../components/description'
 import theme from '../theme'
-import Datasource from '../api'
 import RNImmediateCall from 'react-native-immediate-phone-call'
 import { permissions } from '../utils'
 
 class PolizaDescription extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      sinisters: 0
-    }
-    this.getSinisters = this.getSinisters.bind(this)
-    this.sinisters = this.sinisters.bind(this)
-  }
   static navigationOptions = ({ navigation }) => ({ title: navigation.state.params.title }) // eslint-disable-line
 
-  async getSinisters () {
-    let { poliza } = this.props.navigation.state.params
-    let { data } = await Datasource.hasSinisters(poliza)
-    data = data[0]
-    this.setState({ sinisters: data['count(*)'] })
-  }
-
-  componentDidMount () {
-    this.getSinisters()
-  }
-
   sinisters () {
-    if (this.state.sinisters > 0) {
-      let { poliza } = this.props.navigation.state.params
+    let poliza = this.props.navigation.state.params
+    if (poliza.amount_sinisters > 0) {
       return (
         <TouchableHighlight style={styles.sinistersSection} onPress={() => this.props.navigation.navigate('sinisters', { poliza })}>
-          <Text style={styles.text}>Ver {this.state.sinisters} Siniestros </Text>
+          <Text style={styles.text}>Ver {poliza['AMOUNT_SINISTERS']} Siniestros </Text>
         </TouchableHighlight>
       )
     }
@@ -52,7 +32,7 @@ class PolizaDescription extends Component {
 
   renderDescription () {
     let { titular, cedula_nit, placas, tipo_poliza, poliza } = this.props.navigation.state.params
-    let description = { Titular: titular, Poliza: poliza, 'CC/Nit': cedula_nit, Placa: placas, tipo: tipo_poliza }
+    let description = { Titular: titular, Poliza: poliza, 'CC/Nit': cedula_nit, Placa: placas, tipo: tipo_poliza,  }
     return Object.keys(description).map((key, index) => (
       <DescriptionItem title={key} value={description[key]} key={`${key}-${index}`} />
     ))
@@ -91,6 +71,8 @@ class PolizaDescription extends Component {
           {this.sinisters()}
           <View style={styles.containerDescription}>
             {this.renderDescription()}
+            <DescriptionItem title='Fecha de adquisicion' value={poliza.fecha_inicial} />
+            <DescriptionItem title='Fecha de de vencimiento' value={poliza.fecha_final} />
             <Text style={styles.Descriptiontitle}>Observaciones: <Text style={styles.Descriptionvalue}>{poliza.observaciones}</Text></Text>
           </View>
       </ScrollView>

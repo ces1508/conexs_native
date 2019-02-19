@@ -1,32 +1,32 @@
 import Datasource from '../../api'
 import {
-  ERROR_GET_POLIZAS,
-  ON_FETCHING_POLIZAS,
-  SUCCESS_GET_POLIZAS
+  ERROR_GET_SOATS,
+  ON_FETCHING_SOATS,
+  SUCCESS_GET_SOATS
 } from './actions'
 
-export const getPolizas = (token) => {
+export const getSoats = (token) => {
   return async dispatch => {
     dispatch(onFetching())
-    let { data, status } = await Datasource.getPolizas(token)
+    let { data, status } = await Datasource.getPolizas(token, 'soats')
     if (status !== 200) {
       if (status === 413 || status === 401) return dispatch(handleError({ message: 'UnAuthorizade' }))
       if (status >= 500) {
         return dispatch(handleError({ message: 'estamos presentando problemas con nuestros servidores, por favor intente mas' }))
       }
     }
-    return dispatch(handleSuccess(data.polizas))
+    return dispatch(handleSuccess(data.soats))
   }
 }
 
-function handleSuccess (polizas) {
-  return { type: SUCCESS_GET_POLIZAS, polizas }
+function handleSuccess (soats) {
+  return { type: SUCCESS_GET_SOATS, soats }
 }
 
 function handleError (error) {
-  return { type: ERROR_GET_POLIZAS, error }
+  return { type: ERROR_GET_SOATS, error }
 }
 
 function onFetching () {
-  return { type: ON_FETCHING_POLIZAS }
+  return { type: ON_FETCHING_SOATS }
 }

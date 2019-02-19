@@ -4,7 +4,7 @@ import { createAppContainer } from 'react-navigation'
 import store from './src/store'
 import { Provider } from 'react-redux'
 import { getItem } from './src/utils'
-import { BarIndicator, SkypeIndicator } from 'react-native-indicators'
+import { BarIndicator } from 'react-native-indicators'
 import { View } from 'react-native'
 import theme from './src/theme'
 

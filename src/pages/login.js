@@ -14,7 +14,7 @@ import { connect } from 'react-redux'
 import { handleInput, login } from '../actions/login'
 import { saveItem } from '../utils'
 
-const mapStateToProps = state => state.login
+const mapStateToProps = state => ({ ...state.login })
 const mapDispatchToProps = {
   handleInput,
   login
@@ -28,9 +28,9 @@ class LoginScreen extends Component {
     this.sendToPolizas = this.sendToPolizas.bind(this)
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.successLogin) {
-      this.sendToPolizas()
+  async componentWillReceiveProps (nextProps) {
+    if (nextProps.token) {
+      await this.sendToPolizas()
     }
     if (nextProps.error.hasOwnProperty('error')) {
       let { error } = nextProps.error
@@ -41,26 +41,20 @@ class LoginScreen extends Component {
       }
     }
   }
-
   async sendToPolizas () {
-    let user = this.props.value.split(' ')[0].toLowerCase()
-    let saveUser = await saveItem('@user', user)
-    if (!saveUser.hasOwnProperty('error')) {
-      this.props.navigation.navigate('polizas')
-    }
+    return this.props.navigation.navigate('polizas')
   }
 
   onSubmit () {
     let { value } = this.props
-    const rgx = new RegExp('^[a-zA-Z]{3}[0-9]{2}[a-zA-Z0-9]?$')
-    let auth = 'cedula'
-    if (value.match(rgx)) {
-      auth = 'placa'
-    }
     let validate = value.split(' ')
     if (validate.length < 2) return this.renderAlert('Error', 'debes  enviar tu codigo de seguridad junto a tu documento')
     if (validate[0].toLowerCase() === validate[1].toLowerCase()) {
-      return this.props.login(auth, validate[0].toLowerCase())
+      let data = {
+        value: validate[0],
+        confirmation: validate[1]
+      }
+      return this.props.login(data)
     }
     return this.renderAlert('Ups !', 'por favor perifica tus datos y vuelve a intentarlo')
   }
@@ -88,7 +82,7 @@ class LoginScreen extends Component {
             value={this.props.value}
             style={styles.input}
             label=''
-            handleText={(text) => this.props.handleInput(text)}
+            handleText={this.props.handleInput}
           />
         </View>
         <Button style={styles.button} text='Ingresar' textStyle={styles.buttonText} onPress={this.onSubmit} />

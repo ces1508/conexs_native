@@ -1,34 +1,34 @@
 import {
-  ERROR_GET_POLIZAS,
-  SUCCESS_GET_POLIZAS,
-  ON_FETCHING_POLIZAS
-} from '../actions/polizas/actions'
+  SUCCESS_GET_SOATS,
+  ON_FETCHING_SOATS,
+  ERROR_GET_SOATS
+} from '../actions/soats/actions'
 
 const initialState = {
-  polizas: [],
+  soats: [],
   onFetching: false,
   error: {}
 }
 
-export default function polizasReducer (state = initialState, action) {
+export default function soatsReducer (state = initialState, action) {
   switch (action.type) {
-    case ON_FETCHING_POLIZAS:
+    case ON_FETCHING_SOATS:
       return {
         ...state,
         onFetching: true
       }
-    case ERROR_GET_POLIZAS:
+    case ERROR_GET_SOATS:
       return {
         ...state,
         onFetching: false,
         error: action.error
       }
-    case SUCCESS_GET_POLIZAS:
+    case SUCCESS_GET_SOATS:
       return {
         ...state,
         onFetching: false,
         error: {},
-        polizas: [...state.polizas, ...action.polizas]
+        soats: [...state.soats, ...action.soats]
       }
     default:
       return state

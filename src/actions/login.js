@@ -5,28 +5,32 @@ export const ON_FETCHING = 'ON_FETCHING'
 export const SUCCESS_LOGIN = 'SUCCESS_LOGIN'
 export const ERROR_LOGIN = 'ERROR_LOGIN'
 export const CLEAN = 'CLEAN'
+export const SET_TOKEN = 'SET_TOKEN'
 
 export function handleInput (value) {
   return { type: HANDLE_INPUT, value }
 }
 
+export function setToken (token) {
+  return { type: SET_TOKEN, token }
+}
+
 export function clean () {
   return { type: CLEAN }
 }
-export function login (auth, value) {
-  console.log(auth, value)
+export function login (userData) {
   return async dispatch => {
-    let { data } = await Datasource.signin(value, auth)
-    if (data.ok) {
-      return dispatch(handleSuccess())
+    let { data, status } = await Datasource.signin(userData)
+    if (status === 201 && data.token) {
+      return dispatch(handleSuccess(data.token))
     } else {
       dispatch(handleError(data))
     }
   }
 }
 
-function handleSuccess () {
-  return { type: 'SUCCESS_LOGIN' }
+function handleSuccess (token) {
+  return { type: 'SUCCESS_LOGIN', token }
 }
 function handleError (error) {
   return { type: ERROR_LOGIN, error }

@@ -3,18 +3,25 @@ import {
   ERROR_LOGIN,
   ON_FETCHING,
   SUCCESS_LOGIN,
-  CLEAN
+  CLEAN,
+  SET_TOKEN
 } from '../actions/login'
 
 const initialState = {
   value: '',
   successLogin: false,
   error: {},
-  onFetching: false
+  onFetching: false,
+  token: null
 }
 
 export default function LoginReducers (state = initialState, action) {
   switch (action.type) {
+    case SET_TOKEN:
+      return {
+        ...state,
+        token: action.token
+      }
     case HANDLE_INPUT:
       return {
         ...state,
@@ -30,7 +37,8 @@ export default function LoginReducers (state = initialState, action) {
       return {
         ...state,
         onFetching: false,
-        successLogin: true
+        successLogin: true,
+        token: action.token
       }
     case ERROR_LOGIN:
       return {

@@ -21,20 +21,18 @@ class Datasource {
     }
   }
 
-  signin (user, method = 'cedula') {
-    let data = {}
-    if (method === 'cedula') {
-      data.cedula = user
-    } else {
-      data.placa = user
-    }
-    return this.makeRequest('loginapi.php', 'POST', data, { auth: method })
+  signin (data) {
+    return this.makeRequest('auth', 'POST', data)
   }
-  getPolizas (cedula) {
-    return this.makeRequest('/list-polizas.php', 'POST', { user: cedula })
+  getPolizas (token, path = 'polizas') {
+    return this.makeRequest(path, 'get', {}, {}, {
+      'Authorization': `Bearer ${token}`
+    })
   }
-  getProfile (cedula) {
-    return this.makeRequest('/api-perfil.php', 'POST', { cedula })
+  getProfile (token) {
+    return this.makeRequest('profile', 'get', {}, {}, {
+      'Authorization': `Bearer ${token}`
+    })
   }
   hasSinisters (poliza) {
     return this.makeRequest('/count_siniestros.php', 'get', {}, { poliza })
