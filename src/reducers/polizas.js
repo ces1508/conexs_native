@@ -28,7 +28,7 @@ export default function polizasReducer (state = initialState, action) {
         ...state,
         onFetching: false,
         error: {},
-        polizas: [...state.polizas, ...action.polizas]
+        polizas: [...action.polizas]
       }
     default:
       return state

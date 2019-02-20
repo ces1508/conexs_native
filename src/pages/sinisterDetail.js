@@ -35,8 +35,10 @@ class SinisterDetailPage extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    marginVertical: 15,
     marginHorizontal: 10,
-    flex: 1
+    flex: 1,
+    alignItems: 'center'
   },
   text: {
     color: '#000',

@@ -29,7 +29,7 @@ export default function sinistersReducer (state = initialState, action) {
       return {
         ...state,
         onFetching: false,
-        data: action.data
+        data: [...action.data]
       }
     case SET_CURRENT_SINISTER:
       return {

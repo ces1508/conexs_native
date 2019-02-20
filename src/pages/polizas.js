@@ -2,13 +2,15 @@ import React, { Component } from 'react'
 import PolizasList from '../components/polizasList'
 import { connect } from 'react-redux'
 import { getPolizas } from '../actions/polizas/creators'
+import { getProfile } from '../actions/profile/creators'
 import { saveItem, getItem } from '../utils/storage'
 import { setToken } from '../actions/login'
 
 const mapStateToProps = state => ({ ...state.polizas, token: state.login.token })
 const mapDispatchToProps = {
   getPolizas,
-  setToken
+  setToken,
+  getProfile
 }
 
 class PolizasScreen extends Component {
@@ -27,7 +29,8 @@ class PolizasScreen extends Component {
   async getPolizas () {
     let { token } = this.props
     await saveItem('@user', token)
-    this.props.getPolizas(this.props.token)
+    this.props.getPolizas(token)
+    this.props.getProfile(token)
   }
 
   render () {

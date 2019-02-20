@@ -8,13 +8,12 @@ import {
   TouchableOpacity
 } from 'react-native'
 import { SafeAreaView } from 'react-navigation'
-import Datasource from '../api'
 import theme from '../theme'
-import { getItem, logout } from '../utils'
+import { logout } from '../utils'
 import { connect } from 'react-redux'
 import { clean } from '../actions/login'
 
-const mapStateToProps = state => state
+const mapStateToProps = state => ({ ...state.profile })
 const mapDispatchToProps = {
   clean
 }
@@ -22,32 +21,15 @@ const mapDispatchToProps = {
 class MenuScreen extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      profile: {}
-    }
     this.handleLogout = this.handleLogout.bind(this)
   }
 
-  async getProfile (cedula) {
-    let { data } = await Datasource.getProfile(cedula)
-    this.setState({
-      profile: data.profile
-    })
-  }
-
-  async componentDidMount () {
-    let user = await getItem('@user')
-    if (!user.hasOwnProperty('error')) {
-      this.getProfile(user.item)
-    }
-    return null
-  }
   handleLogout () {
     this.props.clean()
     logout(this.props.navigation)
   }
   render () {
-    let { profile } = this.state
+    let { profile } = this.props
     return (
       <ScrollView style={{ flex: 1 }}>
         <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }} style={{ flex: 1 }}>
@@ -57,18 +39,18 @@ class MenuScreen extends Component {
               <Text
                 style={[styles.text, styles.textHeader, styles.name]}
                 numberOfLines={1}>
-                {profile.titular}
+                {profile.titular || 'cargando'}
               </Text>
-              <Text style={[styles.text, styles.textHeader]}>{profile.cedula_nit}</Text>
+              <Text style={[styles.text, styles.textHeader]}>{profile.cedula_nit || 'cargando'}</Text>
             </View>
             <View>
               <View style={styles.polizaContainer}>
                 <Text style={styles.text}>Polizas Activas</Text>
-                <Text style={[styles.poliza, styles.active]}>{profile.actives}</Text>
+                <Text style={[styles.poliza, styles.active]}>{profile.actives || 0}</Text>
               </View>
               <View style={styles.polizaContainer}>
                 <Text style={styles.text}>Polizas Inactivas</Text>
-                <Text style={[styles.poliza, styles.inactive]}>{profile.inactives}</Text>
+                <Text style={[styles.poliza, styles.inactive]}>{profile.inactives || 0}</Text>
               </View>
             </View>
             <TouchableOpacity onPress={() => this.handleLogout()}>

@@ -28,7 +28,7 @@ export default function soatsReducer (state = initialState, action) {
         ...state,
         onFetching: false,
         error: {},
-        soats: [...state.soats, ...action.soats]
+        soats: [...action.soats]
       }
     default:
       return state
