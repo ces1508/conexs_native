@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { getSinisters } from '../actions/sinisters/creators'
 import SinistersList from '../components/sinisters'
 
-const mapStateToProps = state => ({ ...state.sinisters })
+const mapStateToProps = state => ({ ...state.sinisters, token: state.login.token })
 const mapDispatachToProps = {
   getSinisters
 }
@@ -11,7 +11,8 @@ const mapDispatachToProps = {
 class SiniestrosScreen extends Component {
   componentDidMount () {
     let { poliza } = this.props.navigation.state.params
-    this.props.getSinisters(poliza)
+    let { token } = this.props
+    this.props.getSinisters(token, poliza)
   }
 
   componentWillReceiveProps (nextProps) {

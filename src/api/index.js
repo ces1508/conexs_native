@@ -34,11 +34,10 @@ class Datasource {
       'Authorization': `Bearer ${token}`
     })
   }
-  hasSinisters (poliza) {
-    return this.makeRequest('/count_siniestros.php', 'get', {}, { poliza })
-  }
-  getSinisters (poliza) {
-    return this.makeRequest('/listSiniestros.php', 'get', {}, { poliza })
+  getSinisters (token, poliza) {
+    return this.makeRequest(`siniestros/${poliza}`, 'get', {}, {}, {
+      'Authorization': `Bearer ${token}`
+    })
   }
 }
 

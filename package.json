@@ -15,6 +15,7 @@
     "react-native-immediate-phone-call": "git+https://github.com/wumke/react-native-immediate-phone-call.git",
     "react-native-indicators": "^0.13.0",
     "react-native-loader": "^1.2.1",
+    "react-native-render-html": "^4.1.1",
     "react-native-vector-icons": "^6.1.0",
     "react-navigation": "^3.0.9",
     "react-redux": "^6.0.0",

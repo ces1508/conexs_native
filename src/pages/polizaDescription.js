@@ -3,7 +3,7 @@ import {
   ScrollView,
   View,
   Text,
-  TouchableHighlight,
+  TouchableWithoutFeedback,
   StyleSheet,
   PermissionsAndroid,
   Alert,
@@ -22,9 +22,11 @@ class PolizaDescription extends Component {
     let poliza = this.props.navigation.state.params
     if (poliza.amount_sinisters > 0) {
       return (
-        <TouchableHighlight style={styles.sinistersSection} onPress={() => this.props.navigation.navigate('sinisters', { poliza })}>
-          <Text style={styles.text}>Ver {poliza['AMOUNT_SINISTERS']} Siniestros </Text>
-        </TouchableHighlight>
+        <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('sinisters', { poliza: poliza.poliza })}>
+          <View  style={styles.sinistersSection}>
+            <Text style={styles.text}>Ver {poliza.amount_sinisters} Siniestro {poliza.amount_sinisters > 1 ? 's' : '' } </Text>
+          </View>
+        </TouchableWithoutFeedback>
       )
     }
     return null
@@ -59,15 +61,14 @@ class PolizaDescription extends Component {
     let poliza = this.props.navigation.state.params
     return (
       <ScrollView>
-        <TouchableHighlight
+        <TouchableWithoutFeedback
           onPress={this.makeCallPhone}
-          underlayColor='rgba(100,0,0,0.3)'
-          style={[styles.callContainer, { backgroundColor: poliza.estado === 'ACTIVO' ? 'green' : 'red' }]}>
-          <View>
+          underlayColor='rgba(100,0,0,0.3)'>
+          <View style={[styles.callContainer, { backgroundColor: poliza.estado === 'ACTIVO' ? 'green' : 'red' }]}>
             <Icon name='phone' size={100} color='#fff' />
             <Text style={styles.callText}>Solictar Asistencia!</Text>
           </View>
-          </TouchableHighlight>
+          </TouchableWithoutFeedback>
           {this.sinisters()}
           <View style={styles.containerDescription}>
             {this.renderDescription()}
@@ -112,7 +113,7 @@ const styles = StyleSheet.create({
   sinistersSection: {
     alignItems: 'center',
     paddingVertical: 15,
-    borderBottomWidth: 2,
+    borderBottomWidth: 0.5,
     borderBottomColor: theme.colors.button
   },
   text: {
