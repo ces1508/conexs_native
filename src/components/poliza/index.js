@@ -15,7 +15,8 @@ const Poliza = props => (
           </Text>
         </Text>
         <Text style={styles.text}>Poliza: {props.poliza}</Text>
-        <Text style={styles.text}>Placa: {props.placas}</Text>
+        <Text style={styles.text}>{props.tipo_poliza}</Text>
+        {props.placas !== 'N/A' ? <Text style={styles.text}>Placa: {props.placas}</Text> : null}
       </View>
     </View>
   </TouchableOpacity>
