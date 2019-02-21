@@ -1,21 +1,18 @@
-import React, { Component } from 'react'
 import PolizasList from '../components/polizasList'
 import { connect } from 'react-redux'
-import { getSoats } from '../actions/soats/creators'
+import {
+  getSoats as getData,
+  getMoreSoats as handlePagination,
+  handleRefresh
+} from '../actions/soats/creators'
+import listwithInfiniteScroll from '../components/infiniteScroll'
 
 const mapStateToProps = state => ({ ...state.soats, token: state.login.token })
 const mapsDispatchToProps = {
-  getSoats
+  getData,
+  handlePagination,
+  handleRefresh
 }
 
-class Soats extends Component {
-  componentDidMount () {
-    this.props.getSoats(this.props.token)
-  }
-  render () {
-    let { soats, onFetching } = this.props
-    return <PolizasList data={soats} navigation={this.props.navigation} onFetching={onFetching} />
-  }
-}
-
+const Soats = listwithInfiniteScroll(PolizasList)
 export default connect(mapStateToProps, mapsDispatchToProps)(Soats)

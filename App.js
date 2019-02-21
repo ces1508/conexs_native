@@ -7,6 +7,7 @@ import { getItem } from './src/utils'
 import { BarIndicator } from 'react-native-indicators'
 import { View } from 'react-native'
 import theme from './src/theme'
+import { setToken } from './src/actions/login'
 
 export default class App extends Component {
   constructor (props) {
@@ -20,6 +21,7 @@ export default class App extends Component {
     let user = await getItem('@user')
     if (!user.hasOwnProperty('error')) {
       if (user.item !== null) {
+        store.dispatch(setToken(user.item))
         return this.setState({ isAuthenticate: true, appReady: true })
       }
     }

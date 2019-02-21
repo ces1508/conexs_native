@@ -12,16 +12,44 @@ import theme from '../theme'
 import { logout } from '../utils'
 import { connect } from 'react-redux'
 import { clean } from '../actions/login'
+import { saveItem, getItem } from '../utils/storage'
+import { setToken } from '../actions/login'
+import { getProfile } from '../actions/profile/creators'
 
-const mapStateToProps = state => ({ ...state.profile })
+const mapStateToProps = state => ({ ...state.profile, token: state.login.token })
 const mapDispatchToProps = {
-  clean
+  clean,
+  setToken,
+  getProfile
 }
 
 class MenuScreen extends Component {
   constructor (props) {
     super(props)
     this.handleLogout = this.handleLogout.bind(this)
+  }
+
+  async componentDidMount () {
+    console.log('montnando side menu')
+    this.setToken()
+  }
+
+  async setToken () {
+    // let token = await getItem('@user')
+    // console.log(token)
+    // if (token) {
+    //   if (!token.hasOwnProperty('error') && this.props.token === null) {
+    //     this.props.setToken(token.item)
+    //   }
+    // } else if (this.props.token) {
+    //   await setToken(this.props.token)
+    // }
+    this.getProfile()
+  }
+
+  getProfile () {
+    let { token } = this.props
+    this.props.getProfile(token)
   }
 
   handleLogout () {

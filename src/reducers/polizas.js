@@ -8,13 +8,15 @@ import {
 } from '../actions/polizas/actions'
 
 const initialState = {
-  polizas: [],
+  data: [],
   onFetching: false,
   error: {},
   loadingMore: false,
   skip: 0,
   limit: 20,
-  onRefreshing: false
+  refreshing: false,
+  initLoad: false,
+  isLastPage: false
 }
 
 export default function polizasReducer (state = initialState, action) {
@@ -22,13 +24,15 @@ export default function polizasReducer (state = initialState, action) {
     case ON_FETCHING_POLIZAS:
       return {
         ...state,
-        onFetching: true
+        onFetching: true,
+        initLoad: true
       }
     case ERROR_GET_POLIZAS:
       return {
         ...state,
         onFetching: false,
         loadingMore: false,
+        refreshing: false,
         error: action.error
       }
     case SUCCESS_GET_POLIZAS:
@@ -37,8 +41,9 @@ export default function polizasReducer (state = initialState, action) {
         onFetching: false,
         error: {},
         skip: 0,
-        onRefreshing: false,
-        polizas: [...action.polizas]
+        refreshing: false,
+        isLastPage: false,
+        data: [...action.polizas]
       }
     case LOADING_MORE_POLIZAS:
       return {
@@ -50,12 +55,13 @@ export default function polizasReducer (state = initialState, action) {
         ...state,
         loadingMore: false,
         skip: action.skip,
-        polizas: [...state.polizas, ...action.polizas]
+        data: [...state.data, ...action.polizas],
+        isLastPage: action.polizas.length < 5
       }
     case ON_REFRESHING_POLIZAS:
       return {
         ...state,
-        onRefreshing: true
+        refreshing: true
       }
     default:
       return state
