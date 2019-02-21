@@ -20,9 +20,10 @@ const List = props => {
     <FlatList
       horizontal={props.horizontal}
       ListEmptyComponent={props.listEmpty}
-      ListFooterComponent={props.footer}
-      ItemSeparatorComponent={() => props.separator || <Separator height={props.height} />}
+      ListFooterComponent={props.loadingMore ? <BarIndicator count={5} color={theme.colors.lightBlue} size={20} /> : null}
+      ItemSeparatorComponent={() => <Separator height={props.height} />}
       data={props.data}
+
       {...props}
     />
   )

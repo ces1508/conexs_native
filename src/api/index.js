@@ -24,8 +24,8 @@ class Datasource {
   signin (data) {
     return this.makeRequest('auth', 'POST', data)
   }
-  getPolizas (token, path = 'polizas') {
-    return this.makeRequest(path, 'get', {}, {}, {
+  getPolizas (token, path = 'polizas', skip) {
+    return this.makeRequest(path, 'get', {}, { skip }, {
       'Authorization': `Bearer ${token}`
     })
   }
