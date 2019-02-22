@@ -7,70 +7,75 @@ import {
   MenuScreen,
   polizaDescription,
   SiniestrosScreen,
-  SinisterDetailScreen
+  SinisterDetailScreen,
+  NotificationScreen,
+  NotificationDescription
 } from '../pages'
 import MenuIcon from '../components/menuIcon'
-const Tabs = createBottomTabNavigator(
-  {
-    polizas: PolizasScreen,
-    soats: SoatsScreen
-  },
-  {
-    defaultNavigationOptions: ({ navigation }) => {
-      let { routeName } = navigation.state
-      let label = routeName === 'polizas' ? 'Polizas' : 'Soats'
-      return {
-        tabBarLabel: label
-      }
-    }
-  }
-)
+import NotificationIcon from '../components/notificationIcon'
 
-const DrawerNavivagor = createDrawerNavigator({
-  polizas: {
-    screen: Tabs
-  }
+const Tabs = createBottomTabNavigator({
+  polizas: PolizasScreen,
+  soats: SoatsScreen
 },
 {
+  defaultNavigationOptions: ({ navigation }) => {
+    let { routeName } = navigation.state
+    let label = routeName === 'polizas' ? 'Polizas' : 'Soats'
+    return {
+      tabBarLabel: label
+    }
+  }
+})
+
+const DrawerNavivagor = createDrawerNavigator({
+  polizas: Tabs
+}, {
   contentComponent: MenuScreen,
   drawerType: 'something'
 })
 
 const Stack = (isAuthenticate = false) => {
-  console.log(isAuthenticate)
-  return createStackNavigator(
-    {
-      login: {
-        screen: LoginScreen,
-        navigationOptions: {
-          header: null
-        }
-      },
-      polizas: {
-        navigationOptions: ({ navigation }) => ({
-          title: 'Polizas',
-          headerLeft: <MenuIcon navigation={navigation} />
-        }),
-        screen: DrawerNavivagor
-      },
-      polizaDescription: {
-        screen: polizaDescription
-      },
-      sinisters: {
-        screen: SiniestrosScreen,
-        navigationOptions: {
-          title: 'Siniestros'
-        }
-      },
-      sinisterDetail: {
-        screen: SinisterDetailScreen
+  return createStackNavigator({
+    login: {
+      screen: LoginScreen,
+      navigationOptions: {
+        header: null
       }
     },
-    {
-      headerMode: 'screen',
-      initialRouteName: isAuthenticate ? 'polizas' : 'login'
+    polizas: {
+      screen: DrawerNavivagor,
+      navigationOptions: ({ navigation }) => ({
+        title: 'Polizas',
+        headerLeft: <MenuIcon navigation={navigation} />,
+        headerRight: <NotificationIcon navigation={navigation} />
+      })
+    },
+    polizaDescription: {
+      screen: polizaDescription
+    },
+    sinisters: {
+      screen: SiniestrosScreen,
+      navigationOptions: {
+        title: 'Siniestros'
+      }
+    },
+    sinisterDetail: {
+      screen: SinisterDetailScreen
+    },
+    notifications: {
+      screen: NotificationScreen,
+      navigationOptions: {
+        title: 'Notificaciones'
+      }
+    },
+    notificationDescription: {
+      screen: NotificationDescription
     }
-  )
+  }, {
+    headerMode: 'screen',
+    initialRouteName: isAuthenticate ? 'polizas' : 'login'
+  })
 }
 
 export default Stack

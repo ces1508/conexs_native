@@ -39,6 +39,11 @@ class Datasource {
       'Authorization': `Bearer ${token}`
     })
   }
+  notifications (token, skip) {
+    return this.makeRequest('notifications', 'get', {}, { skip }, {
+      'Authorization': `Bearer ${token}`
+    })
+  }
 }
 
 export default new Datasource(setup)
