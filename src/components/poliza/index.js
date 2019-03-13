@@ -1,12 +1,13 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import Logo from './companyLogo'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 
 const Poliza = props => (
   <TouchableOpacity
     onPress={() => props.navigation.navigate('polizaDescription', { title: `${props.tipo_poliza}-${props.aseguradora}`, ...props })} >
     <View style={styles.container}>
       <View style={styles.containerImage}>
-        <Image source={{ uri: 'https://picsum.photos/320/320?image=0' }} style={styles.image} />
+        <Logo company={props.aseguradora} />
       </View>
       <View style={styles.containerText}>
         <Text style={styles.text}>Estado:
@@ -33,11 +34,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 50,
     overflow: 'hidden'
-  },
-  image: {
-    width: 60,
-    height: 60,
-    borderRadius: 30
   },
   containerText: {
     flexDirection: 'column',
