@@ -11,39 +11,48 @@ import { SafeAreaView } from 'react-navigation'
 import theme from '../theme'
 import { logout } from '../utils'
 import { connect } from 'react-redux'
-import { clean } from '../actions/login'
 import { saveItem, getItem } from '../utils/storage'
-import { setToken } from '../actions/login'
+import { clean } from '../actions/login'
 import { getProfile } from '../actions/profile/creators'
+import { handlePushNotification } from '../actions/notifications/creators'
+import OneSignal from 'react-native-onesignal'
 
 const mapStateToProps = state => ({ ...state.profile, token: state.login.token })
 const mapDispatchToProps = {
   clean,
-  setToken,
-  getProfile
+  getProfile,
+  handlePushNotification
 }
 
 class MenuScreen extends Component {
   constructor (props) {
     super(props)
     this.handleLogout = this.handleLogout.bind(this)
+    this._onNotification = this._onNotification.bind(this)
+    this._onOpenNotification = this._onOpenNotification.bind(this)
+    OneSignal.addEventListener('received', this._onNotification)
+    OneSignal.addEventListener('opened', this._onOpenNotification)
   }
 
+  _onNotification (n) {
+    this.props.handlePushNotification(n)
+  }
+
+  _onOpenNotification (openResult) {
+    console.log(openResult)
+    this.props.navigation.navigate('notifications')
+  }
   async componentDidMount () {
     console.log('montnando side menu')
     this.setToken()
   }
 
   async setToken () {
-    // let token = await getItem('@user')
-    // console.log(token)
-    // if (token) {
-    //   if (!token.hasOwnProperty('error') && this.props.token === null) {
-    //     this.props.setToken(token.item)
-    //   }
-    // } else if (this.props.token) {
-    //   await setToken(this.props.token)
-    // }
+    let { token } = this.props
+    let { item } = await getItem('@user')
+    if (!item) {
+      await saveItem('@user', token)
+    }
     this.getProfile()
   }
 

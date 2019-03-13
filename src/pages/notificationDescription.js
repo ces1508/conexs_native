@@ -16,7 +16,6 @@ export default class Notification extends PureComponent {
   }
   render () {
     let notification = this.props.navigation.getParam('notification')
-    console.log(notification)
     return (
       <View style={styles.container}>
         <Html html={notification.body} baseFontStyle={styles.html} />
