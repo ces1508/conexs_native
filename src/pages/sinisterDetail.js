@@ -21,9 +21,8 @@ class SinisterDetailPage extends Component {
     return (
       <View style={styles.container}>
         <View>
-          <DescriptionItem title='Causa' value='hola mundo' />
-          <DescriptionItem title='Numero de siniestro' value={num_siniestro} />
           <DescriptionItem title='Causa' value={causa} />
+          <DescriptionItem title='Numero de siniestro' value={num_siniestro} />
           <DescriptionItem title='Titular' value={titular} />
           <Text style={styles.text}>Observaciones:</Text>
           <HTML html={observaciones} />

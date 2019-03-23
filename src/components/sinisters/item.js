@@ -20,8 +20,8 @@ const Sinister = props => (
       <View style={styles.containerInformation}>
         <View style={styles.containerText}>
           <Text style={styles.text}>N Siniestro: {props.num_siniestro}</Text>
-          <Text style={styles.text}>Placa: {props.placa}</Text>
-          <Text style={styles.text}>Fecha: {props.fecha_acci}</Text>
+          <Text style={styles.text}>Placa: {props.placas}</Text>
+          <Text style={styles.text}>Fecha: {props.fecha_final}</Text>
         </View>
         <Icons name='chevron-right' size={25} style={styles.icon} />
       </View>

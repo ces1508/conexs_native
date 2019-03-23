@@ -18,10 +18,10 @@ export default class App extends Component {
       appReady: false
     }
     OneSignal.init('1be32096-2997-4d1d-b97c-59b64fa5e6ae', { kOSSettingsKeyAutoPrompt: true })
+    OneSignal.configure()
     OneSignal.inFocusDisplaying(0)
     OneSignal.enableSound(true)
   }
-
   async componentWillMount () {
     let user = await getItem('@user')
     if (!user.hasOwnProperty('error')) {

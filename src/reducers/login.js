@@ -11,7 +11,7 @@ const initialState = {
   value: '',
   successLogin: false,
   error: {},
-  onFetching: false,
+  onLogin: false,
   token: null
 }
 
@@ -31,19 +31,19 @@ export default function LoginReducers (state = initialState, action) {
     case ON_FETCHING:
       return {
         ...state,
-        onFetching: false
+        onLogin: true
       }
     case SUCCESS_LOGIN:
       return {
         ...state,
-        onFetching: false,
+        onLogin: false,
         successLogin: true,
         token: action.token
       }
     case ERROR_LOGIN:
       return {
         ...state,
-        onFetching: false,
+        onLogin: false,
         error: action.error
       }
     case CLEAN:

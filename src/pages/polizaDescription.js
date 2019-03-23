@@ -14,10 +14,34 @@ import DescriptionItem from '../components/description'
 import theme from '../theme'
 import RNImmediateCall from 'react-native-immediate-phone-call'
 import { permissions } from '../utils'
+import Api from '../api'
+import api from '../api';
 
 class PolizaDescription extends Component {
+  constructor (props) {
+    super(props)
+    this.makeCallPhone = this.makeCallPhone.bind(this)
+  }
   static navigationOptions = ({ navigation }) => ({ title: navigation.state.params.title }) // eslint-disable-line
 
+  getNumberByCompany (name) {
+    name = name.toLowerCase()
+    if (name.includes('aig')) return '#23360'
+    if (name.includes('equidad')) return '#23324'
+    if (name.includes('estado')) return '#23388'
+    if (name.includes('allianz')) return '#23265'
+    if (name.includes('mundial')) return '018000515522'
+    if (name.includes('previsora')) return '#23345'
+    if (name.includes('solidaria')) return '#23789'
+    if (name.includes('mapfre')) return '#23624'
+    if (name.includes('liberty')) return '#23224'
+    if (name.includes('solidaria')) return '#23789'
+    if (name.includes('colpatria')) return '#23247'
+    if (name.includes('qbe')) return '#23723'
+    if (name.includes('sura')) return '#23888'
+    if (name.includes('confianza')) return '0316444690'
+    return false
+  }
   sinisters () {
     let poliza = this.props.navigation.state.params
     if (poliza.amount_sinisters > 0) {
@@ -32,6 +56,10 @@ class PolizaDescription extends Component {
     return null
   }
 
+  async sendEmail () {
+    let { titular, cedula, poliza } = this.props.navigation.state.params
+    let email = await api.sendEmail({ titular, cedula, poliza })
+  }
   renderDescription () {
     let { titular, cedula_nit, placas, tipo_poliza, poliza } = this.props.navigation.state.params
     let description = { Titular: titular, Poliza: poliza, 'CC/Nit': cedula_nit, Placa: placas, tipo: tipo_poliza,  }
@@ -40,22 +68,33 @@ class PolizaDescription extends Component {
     ))
   }
   async makeCallPhone () {
-    if (Platform.OS === 'android') {
-      let payload = {
-        title: "Necesitamos el Permiso, para poder realizar la llamada",
-        message: 'con este permiso, te comunicaremos directamente con la entidad que presta el seguro.'
-      }
-      let hasPermission = await permissions(PermissionsAndroid.PERMISSIONS.CALL_PHONE, payload)
-      if (hasPermission) {
-        return RNImmediateCall.immediatePhoneCall('3203230522')
-      } else {
-        return Alert.alert(
-          'Lo Sentimos...',
-          'No podimos iniciar la llamada debido a que no has aceptado el permiso'
-        )
-      }
+    let { estado, aseguradora } = this.props.navigation.state.params
+    this.sendEmail()
+     if (estado === 'ACTIVO') {
+        let number = this.getNumberByCompany(aseguradora)
+         if (number) {
+          if (Platform.OS === 'android') {
+            let payload = {
+              title: "Necesitamos el Permiso, para poder realizar la llamada",
+              message: 'con este permiso, te comunicaremos directamente con la entidad que presta el seguro.'
+            }
+            let hasPermission = await permissions(PermissionsAndroid.PERMISSIONS.CALL_PHONE, payload)
+            if (hasPermission) {
+              return RNImmediateCall.immediatePhoneCall(number)
+            } else {
+              return Alert.alert(
+                'Lo Sentimos...',
+                'No podimos iniciar la llamada debido a que no has aceptado el permiso'
+              )
+            }
+          }
+          return RNImmediateCall.immediatePhoneCall(number)
+       }
+       Alert.alert(
+         'Lo sentimos',
+         'no hemos podido contactar con la aseguradora, pero nuestros asesores pronto se contactarán contigo'
+       )
     }
-    return RNImmediateCall.immediatePhoneCall('3203230522')
   }
   render () {
     let poliza = this.props.navigation.state.params

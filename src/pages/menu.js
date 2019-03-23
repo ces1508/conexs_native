@@ -16,6 +16,7 @@ import { clean } from '../actions/login'
 import { getProfile } from '../actions/profile/creators'
 import { handlePushNotification } from '../actions/notifications/creators'
 import OneSignal from 'react-native-onesignal'
+import Datasource from '../api'
 
 const mapStateToProps = state => ({ ...state.profile, token: state.login.token })
 const mapDispatchToProps = {
@@ -32,6 +33,12 @@ class MenuScreen extends Component {
     this._onOpenNotification = this._onOpenNotification.bind(this)
     OneSignal.addEventListener('received', this._onNotification)
     OneSignal.addEventListener('opened', this._onOpenNotification)
+    OneSignal.addEventListener('ids', this.onIds)
+  }
+
+  async onIds (device) {
+    let { item } = await getItem('@user')
+    await Datasource.savePushToken(item, device.pushToken)
   }
 
   _onNotification (n) {
@@ -43,7 +50,6 @@ class MenuScreen extends Component {
     this.props.navigation.navigate('notifications')
   }
   async componentDidMount () {
-    console.log('montnando side menu')
     this.setToken()
   }
 

@@ -20,6 +20,7 @@ export function clean () {
 }
 export function login (userData) {
   return async dispatch => {
+    dispatch(onLogin())
     let { data, status } = await Datasource.signin(userData)
     if (status === 201 && data.token) {
       return dispatch(handleSuccess(data.token))
@@ -30,8 +31,11 @@ export function login (userData) {
 }
 
 function handleSuccess (token) {
-  return { type: 'SUCCESS_LOGIN', token }
+  return { type: SUCCESS_LOGIN, token }
 }
 function handleError (error) {
   return { type: ERROR_LOGIN, error }
+}
+function onLogin () {
+  return { type: ON_FETCHING }
 }

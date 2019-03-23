@@ -17,6 +17,7 @@ class Datasource {
       })
       return { data: response.data, status: response.status }
     } catch (e) {
+      console.log(e.response)
       return { data: e.response.data, status: e.response.status }
     }
   }
@@ -43,6 +44,19 @@ class Datasource {
     return this.makeRequest('notifications', 'get', {}, { skip }, {
       'Authorization': `Bearer ${token}`
     })
+  }
+  savePushToken (token, regId) {
+    return this.makeRequest('devices', 'post', { regId }, {}, {
+      'Authorization': `Bearer ${token}`
+    })
+  }
+  async sendEmail (data) {
+    try {
+      await axios.post('http://api.conexseguros.com/send-mail.php', data)
+      return true
+    } catch (e) {
+      return false
+    }
   }
 }
 

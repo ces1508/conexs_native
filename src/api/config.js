@@ -1,5 +1,5 @@
 const setup = {
-  apiUrl: 'http://192.168.1.53:3000'
+  apiUrl: 'http://142.93.9.246'
 }
 
 export default setup

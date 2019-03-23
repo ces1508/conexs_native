@@ -12,7 +12,7 @@ import Button from '../components/button'
 import theme from '../theme'
 import { connect } from 'react-redux'
 import { handleInput, login } from '../actions/login'
-import { saveItem } from '../utils'
+// import { saveItem } from '../utils'
 
 const mapStateToProps = state => ({ ...state.login })
 const mapDispatchToProps = {
@@ -46,7 +46,8 @@ class LoginScreen extends Component {
   }
 
   onSubmit () {
-    let { value } = this.props
+    let { value, onLogin } = this.props
+    if (onLogin) return null
     let validate = value.split(' ')
     if (validate.length < 2) return this.renderAlert('Error', 'debes  enviar tu codigo de seguridad junto a tu documento')
     if (validate[0].toLowerCase() === validate[1].toLowerCase()) {
@@ -67,6 +68,7 @@ class LoginScreen extends Component {
   }
 
   render () {
+    let { onLogin, value } = this.props
     return (
       <View style={styles.container}>
         <StatusBar backgroundColor={theme.colors.blue} />
@@ -79,13 +81,13 @@ class LoginScreen extends Component {
           <Text style={styles.text}>o Placa de su vehículo</Text>
           <Input
             name={'document'}
-            value={this.props.value}
+            value={value}
             style={styles.input}
             label=''
             handleText={this.props.handleInput}
           />
         </View>
-        <Button style={styles.button} text='Ingresar' textStyle={styles.buttonText} onPress={this.onSubmit} />
+        <Button style={styles.button} text={onLogin ? '...Iniciando sesión' : 'Entrar'} textStyle={styles.buttonText} onPress={this.onSubmit} />
         <View style={styles.footer}>
           <Text style={[styles.text, styles.footerText]}>Màs Informaciòn</Text>
         </View>
