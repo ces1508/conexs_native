@@ -25,7 +25,7 @@ Button.propTypes = {
 }
 Button.defaultProps = {
   text: 'send prop text to change it',
-  onPress: () => console.warn('send prop onPress to handle it'),
+  onPress: () => console.warn('send prop onPress to handle it')
 }
 const styles = StyleSheet.create({
   main: {

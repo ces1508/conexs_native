@@ -18,6 +18,7 @@ const List = props => {
   }
   return (
     <FlatList
+      style={{ flex: 1 }}
       horizontal={props.horizontal}
       ListEmptyComponent={props.listEmpty}
       ListFooterComponent={props.loadingMore ? <BarIndicator count={5} color={theme.colors.lightBlue} size={20} /> : null}
