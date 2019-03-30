@@ -5,7 +5,9 @@ import {
   StatusBar,
   Image,
   Text,
-  Alert
+  Alert,
+  KeyboardAvoidingView,
+  Keyboard
 } from 'react-native'
 import Input from '../components/input'
 import Button from '../components/button'
@@ -26,6 +28,29 @@ class LoginScreen extends Component {
     this.onSubmit = this.onSubmit.bind(this)
     this.renderAlert = this.renderAlert.bind(this)
     this.sendToPolizas = this.sendToPolizas.bind(this)
+    this.handleKeyboardShow = this.handleKeyboardShow.bind(this)
+    this.handleKeyboardHide = this.handleKeyboardHide.bind(this)
+    this.state = {
+      keyboard: false
+    }
+  }
+
+  componentDidMount () {
+    this.keyboardShow = Keyboard.addListener('keyboardDidShow', this.handleKeyboardShow)
+    this.keyboardHide = Keyboard.addListener('keyboardDidHide', this.handleKeyboardHide)
+  }
+
+  componentWillUnmount () {
+    Keyboard.removeListener(this.keyboardShow)
+    Keyboard.removeListener(this.keyboardHide)
+  }
+
+  handleKeyboardShow () {
+    this.setState({ keyboard: true })
+  }
+
+  handleKeyboardHide () {
+    this.setState({ keyboard: false })
   }
 
   async componentWillReceiveProps (nextProps) {
@@ -70,10 +95,10 @@ class LoginScreen extends Component {
   render () {
     let { onLogin, value } = this.props
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior='padding' enabled>
         <StatusBar backgroundColor={theme.colors.blue} />
         <View style={styles.containerImage}>
-          <Image style={styles.image} source={require('../img/horizontal-logo.png')} resizeMode='stretch' resizeMethod='scale' />
+          <Image style={this.state.keyboard ? styles.hide : styles.image} source={require('../img/horizontal-logo.png')} resizeMode='stretch' resizeMethod='scale' />
         </View>
         <View style={styles.form}>
           <Text style={[styles.text, styles.welcome]}>Bienvenido</Text>
@@ -89,9 +114,9 @@ class LoginScreen extends Component {
         </View>
         <Button style={styles.button} text={onLogin ? '...Iniciando sesión' : 'Entrar'} textStyle={styles.buttonText} onPress={this.onSubmit} />
         <View style={styles.footer}>
-          <Text style={[styles.text, styles.footerText]}>Màs Informaciòn</Text>
+          <Text style={this.state.keyboard ? styles.hide : [styles.text, styles.footerText]}>Màs Informaciòn</Text>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }
@@ -162,5 +187,9 @@ const styles = StyleSheet.create({
   footerText: {
     textAlignVertical: 'center',
     flex: 1
+  },
+  hide: {
+    height: 0,
+    width: 0
   }
 })
