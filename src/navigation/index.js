@@ -13,6 +13,8 @@ import {
 } from '../pages'
 import MenuIcon from '../components/menuIcon'
 import NotificationIcon from '../components/notificationIcon'
+import { Text } from 'react-native'
+import Theme from '../theme'
 
 const Tabs = createBottomTabNavigator({
   polizas: PolizasScreen,
@@ -23,7 +25,18 @@ const Tabs = createBottomTabNavigator({
     let { routeName } = navigation.state
     let label = routeName === 'polizas' ? 'Polizas' : 'Soats'
     return {
-      tabBarLabel: label
+      tabBarLabel: ({ tintColor }) => (
+        <Text style={{
+          fontSize: Theme.sizes.text,
+          textAlign: 'center',
+          textAlignVertical: 'center',
+          color: tintColor
+        }}>{ label }</Text>
+      ),
+      tabBarOptions: {
+        activeTintColor: Theme.colors.yellow,
+        inactiveTintColor: 'gray'
+      }
     }
   }
 })
