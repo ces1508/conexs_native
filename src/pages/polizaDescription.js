@@ -16,6 +16,7 @@ import RNImmediateCall from 'react-native-immediate-phone-call'
 import { permissions } from '../utils'
 import Api from '../api'
 import api from '../api';
+import HTML from 'react-native-render-html'
 
 class PolizaDescription extends Component {
   constructor (props) {
@@ -113,7 +114,8 @@ class PolizaDescription extends Component {
             {this.renderDescription()}
             <DescriptionItem title='Fecha de adquisicion' value={poliza.fecha_inicial} />
             <DescriptionItem title='Fecha de de vencimiento' value={poliza.fecha_final} />
-            <Text style={styles.Descriptiontitle}>Observaciones: <Text style={styles.Descriptionvalue}>{poliza.observaciones}</Text></Text>
+            <Text style={styles.Descriptiontitle}>Observaciones:</Text>
+            <HTML html={poliza.observaciones} baseFontStyle={{fontSize: 17, color: '#000'}}/>
           </View>
       </ScrollView>
     )
