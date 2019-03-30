@@ -14,9 +14,9 @@ import DescriptionItem from '../components/description'
 import theme from '../theme'
 import RNImmediateCall from 'react-native-immediate-phone-call'
 import { permissions } from '../utils'
-import Api from '../api'
-import api from '../api';
+import api from '../api'
 import HTML from 'react-native-render-html'
+import Button from '../components/button'
 
 class PolizaDescription extends Component {
   constructor (props) {
@@ -47,11 +47,12 @@ class PolizaDescription extends Component {
     let poliza = this.props.navigation.state.params
     if (poliza.amount_sinisters > 0) {
       return (
-        <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('sinisters', { poliza: poliza.poliza })}>
-          <View  style={styles.sinistersSection}>
-            <Text style={styles.text}>Ver {poliza.amount_sinisters} Siniestro {poliza.amount_sinisters > 1 ? 's' : '' } </Text>
-          </View>
-        </TouchableWithoutFeedback>
+      <View style={styles.sinistersSection}>
+        <Button
+          onPress={() => this.props.navigation.navigate('sinisters', { poliza: poliza.poliza })}
+          buttonStyles={styles.button}
+          text={`ver Siniestro ${poliza.amount_sinisters > 1 ? 's' : '' }`}/>
+      </View>
       )
     }
     return null
@@ -59,7 +60,7 @@ class PolizaDescription extends Component {
 
   async sendEmail () {
     let { titular, cedula, poliza } = this.props.navigation.state.params
-    let email = await api.sendEmail({ titular, cedula, poliza })
+    await api.sendEmail({ titular, cedula, poliza })
   }
   renderDescription () {
     let { titular, cedula_nit, placas, tipo_poliza, poliza } = this.props.navigation.state.params
@@ -109,7 +110,6 @@ class PolizaDescription extends Component {
             <Text style={styles.callText}>Solictar Asistencia!</Text>
           </View>
           </TouchableWithoutFeedback>
-          {this.sinisters()}
           <View style={styles.containerDescription}>
             {this.renderDescription()}
             <DescriptionItem title='Fecha de adquisicion' value={poliza.fecha_inicial} />
@@ -117,6 +117,7 @@ class PolizaDescription extends Component {
             <Text style={styles.Descriptiontitle}>Observaciones:</Text>
             <HTML html={poliza.observaciones} baseFontStyle={{fontSize: 17, color: '#000'}}/>
           </View>
+          {this.sinisters()}
       </ScrollView>
     )
   }
@@ -152,10 +153,14 @@ const styles = StyleSheet.create({
     fontWeight: 'normal'
   },
   sinistersSection: {
-    alignItems: 'center',
-    paddingVertical: 15,
-    borderBottomWidth: 0.5,
-    borderBottomColor: theme.colors.button
+    paddingVertical: 5,
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  button: {
+    height: 45,
+    width: '50%',
+    marginBottom: 15
   },
   text: {
     fontSize: theme.sizes.text,

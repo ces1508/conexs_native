@@ -23,10 +23,13 @@ const Body = props => (
     <Text
       style={[styles.text, styles.title]}>
       {props.title}:
-    </Text>
-    <Text
-      style={[styles.text, styles.value]}>
-      {props.value}
+      <Text
+        numberOfLines={2}
+        textBreakStrategy='highQuality'
+        ellipsizeMode='tail'
+        style={[styles.text, styles.value]}>
+        {` ${props.value}`}
+      </Text>
     </Text>
   </View>
 )
@@ -44,7 +47,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   value: {
-    marginLeft: 8,
+    paddingLeft: 12,
     fontWeight: 'normal'
   }
 })
