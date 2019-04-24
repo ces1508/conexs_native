@@ -1,0 +1,4 @@
+export const TOOGLE_FILTER = 'TOOGLE_FILTER'
+export const SET_FILTER = 'SET_FILTER'
+export const RESET_FILTERS = 'RESET_FILTERS'
+export const APPLYFILTERS = 'APPLYFILTERS'

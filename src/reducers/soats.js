@@ -40,7 +40,7 @@ export default function soatsReducer (state = initialState, action) {
         isLastPage: false,
         loadingMore: false,
         refreshing: false,
-        data: [...action.data]
+        data: action.data
       }
     case ON_LOADING_MORE_SOATS:
       return {

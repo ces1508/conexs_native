@@ -9,17 +9,22 @@ function listWithInfiniteScroll (WrappenrComponent) {
       this._handlePagination = this._handlePagination.bind(this)
     }
     componentDidMount () {
-      this.props.getData(this.props.token)
+      this.props.getData(this.props.token, this.props.filters)
     }
     _handleRefresh () {
-      this.props.handleRefresh(this.props.token)
+      this.props.handleRefresh(this.props.token, this.props.filters)
     }
     _handlePagination () {
-      let { token, skip, limit, isLastPage, loadingMore } = this.props
+      let { token, skip, limit, isLastPage, loadingMore, filters } = this.props
       if (!isLastPage) {
         if (!loadingMore) {
-          this.props.handlePagination(token, skip + limit)
+          this.props.handlePagination(token, skip + limit, filters)
         }
+      }
+    }
+    componentWillReceiveProps (nextProps) {
+      if (nextProps.filters.applyFilters !== this.props.filters.applyFilters) {
+        this.props.getData(this.props.token, nextProps.filters)
       }
     }
     render () {

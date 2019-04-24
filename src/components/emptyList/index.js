@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   main: {
     flex: 1,
     flexDirection: 'column',
-    height: Dimensions.get('window').height - 110,
+    height: Dimensions.get('window').height - 130,
     justifyContent: 'center',
     alignItems: 'center'
   }

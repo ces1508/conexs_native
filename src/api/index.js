@@ -15,6 +15,7 @@ class Datasource {
         params,
         headers
       })
+      console.log(response)
       return { data: response.data, status: response.status }
     } catch (e) {
       console.log(e.response)
@@ -25,8 +26,9 @@ class Datasource {
   signin (data) {
     return this.makeRequest('auth', 'POST', data)
   }
-  getPolizas (token, path = 'polizas', skip) {
-    return this.makeRequest(path, 'get', {}, { skip }, {
+  getPolizas (token, path = 'polizas', params) {
+    console.log(params)
+    return this.makeRequest(path, 'get', {}, { ...params }, {
       'Authorization': `Bearer ${token}`
     })
   }

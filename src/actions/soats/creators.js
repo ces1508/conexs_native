@@ -8,37 +8,36 @@ import {
   SUCCESS_PAGINATION_SOATS
 } from './actions'
 
-export const getSoats = (token) => {
+export const getSoats = (token, filters) => {
   return async dispatch => {
     dispatch(onFetching())
-    makeRequest(token, 0, dispatch, handleSuccess, handleError)
+    makeRequest(token, 0, filters, dispatch, handleSuccess, handleError)
   }
 }
 
-export const getMoreSoats = (token, skip) => {
-  console.log(skip)
+export const getMoreSoats = (token, skip, filters) => {
   return async dispatch => {
     dispatch(loadingMore())
-    await makeRequest(token, skip, dispatch, onSuccessLodingMore, handleError)
+    await makeRequest(token, skip, filters, dispatch, onSuccessLodingMore, handleError)
   }
 }
 
-export const handleRefresh = (token) => {
+export const handleRefresh = (token, filters) => {
   return async dispatch => {
     dispatch(onRefreshing())
-    await makeRequest(token, 0, dispatch, handleSuccess, handleError)
+    await makeRequest(token, 0, filters, dispatch, handleSuccess, handleError)
   }
 }
 
-const makeRequest = async (token, skip, dispatch, handleSuccess, handleError) => {
-  let { data, status } = await Datasource.getPolizas(token, 'soats', skip)
+const makeRequest = async (token, skip, filters, dispatch, handleSuccess, handleError) => {
+  let { data, status } = await Datasource.getPolizas(token, 'soats', { skip, ...filters })
   if (status !== 200) {
     if (status === 413 || status === 401) return dispatch(handleError({ message: 'UnAuthorizade' }))
     if (status >= 500) {
       return dispatch(handleError({ message: 'estamos presentando problemas con nuestros servidores, por favor intente mas' }))
     }
   }
-  dispatch(handleSuccess(data.soats, skip))
+  dispatch(handleSuccess(data, skip))
 }
 
 function loadingMore () {
@@ -51,6 +50,7 @@ function onSuccessLodingMore (data, skip) {
   return { type: SUCCESS_PAGINATION_SOATS, data, skip }
 }
 function handleSuccess (data) {
+  console.log('DATA SOATS ===========', data)
   return { type: SUCCESS_GET_SOATS, data }
 }
 

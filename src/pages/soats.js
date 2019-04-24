@@ -7,7 +7,11 @@ import {
 } from '../actions/soats/creators'
 import listwithInfiniteScroll from '../components/infiniteScroll'
 
-const mapStateToProps = state => ({ ...state.soats, token: state.login.token })
+const mapStateToProps = state => ({
+  ...state.soats,
+  token: state.login.token,
+  filters: state.filters
+})
 const mapsDispatchToProps = {
   getData,
   handlePagination,

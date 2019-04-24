@@ -5,11 +5,13 @@ import sinisters from './sinisters'
 import soats from './soats'
 import profile from './profile'
 import notifications from './notifications'
+import filters from './filters'
 export default combineReducers({
   login,
   polizas,
   sinisters,
   soats,
   profile,
-  notifications
+  notifications,
+  filters
 })

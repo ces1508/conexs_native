@@ -43,7 +43,7 @@ export default function polizasReducer (state = initialState, action) {
         skip: 0,
         refreshing: false,
         isLastPage: false,
-        data: [...action.polizas]
+        data: action.polizas
       }
     case LOADING_MORE_POLIZAS:
       return {
