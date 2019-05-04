@@ -51,7 +51,7 @@ class PolizaDescription extends Component {
         <Button
           onPress={() => this.props.navigation.navigate('sinisters', { poliza: poliza.poliza })}
           buttonStyles={styles.button}
-          text={`ver Siniestro ${poliza.amount_sinisters > 1 ? 's' : '' }`}/>
+          text={`ver Siniestro${poliza.amount_sinisters > 1 ? 's' : '' }`}/>
       </View>
       )
     }

@@ -117,10 +117,10 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.lightBlue
   },
   image: {
-    width: 60,
-    height: 60,
+    width: 0,
+    height: 0,
     borderRadius: 30,
-    marginBottom: 10
+    // marginBottom: 10
   },
   polizaContainer: {
     flexDirection: 'row',
