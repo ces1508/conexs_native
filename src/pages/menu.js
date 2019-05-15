@@ -38,7 +38,9 @@ class MenuScreen extends Component {
 
   async onIds (device) {
     let { item } = await getItem('@user')
-    await Datasource.savePushToken(item, device.pushToken)
+    if (item) {
+      await Datasource.savePushToken(item, device.pushToken)
+    }
   }
 
   _onNotification (n) {

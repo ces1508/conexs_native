@@ -159,7 +159,8 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: theme.colors.white,
     marginHorizontal: 20,
-    marginBottom: 10
+    marginBottom: 10,
+    height: 40
   },
   button: {
     borderTopColor: theme.colors.shadowButton,
@@ -173,6 +174,7 @@ const styles = StyleSheet.create({
     color: theme.colors.shadowButton,
     textAlignVertical: 'center',
     textAlign: 'center',
+    lineHeight: 70,
     flex: 1,
     fontSize: theme.sizes.subTitle
   },
