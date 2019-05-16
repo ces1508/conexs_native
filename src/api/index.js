@@ -73,14 +73,14 @@ class Datasource {
     })
   }
   notifications (token, skip) {
-    return this.makeRequest('notifications', 'GET', {}, { skip }, {
+    return this.makeRequest('notifications', 'GET', null, { skip }, {
       'Authorization': `Bearer ${token}`
     })
   }
   savePushToken (token, regId) {
-    // return this.makeRequest('devices', 'post', { regId }, {}, {
-    //   'Authorization': `Bearer ${token}`
-    // })
+    return this.makeRequest('devices', 'post', { regId }, null, {
+      'Authorization': `Bearer ${token}`
+    })
     return true
   }
   async sendEmail (data) {

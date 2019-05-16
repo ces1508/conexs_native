@@ -25,7 +25,7 @@ const Settings = props => (
   <View style={[{ height: props.show ? 170 : 40 }, styles.main]}>
     <Icons
       name={props.show ? 'close' : 'tune'}
-      size={30}
+      size={25}
       style={styles.icon}
       onPress={props.toogleSettings} />
     <View style={styles.actionsContainer}>
@@ -54,7 +54,9 @@ export default connect(mapStatetoProps, mapDispatchtoProps)(Settings)
 
 const styles = StyleSheet.create({
   main: {
-    overflow: 'hidden'
+    overflow: 'hidden',
+    borderBottomWidth: 1,
+    borderBottomColor: 'gray'
   },
   icon: {
     marginTop: 10,
