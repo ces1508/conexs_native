@@ -131,10 +131,11 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 15,
     flex: 1,
+    justifyContent: 'center',
     backgroundColor: theme.colors.blue
   },
   containerImage: {
-    marginTop: 50
+    top: 0
   },
   image: {
     height: 80,

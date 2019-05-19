@@ -5,7 +5,7 @@ import {
 } from 'react-native'
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Card from '../cardListItem'
-import ConexsLogo from '../img/logos/conex_logo.png'
+import ConexsLogo from '../../img/logos/conex_logo.png'
 
 const NotificationItem = props => {
   let { titulo } = props.notification
