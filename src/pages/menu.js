@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   image: {
     width: 0,
     height: 0,
-    borderRadius: 30,
+    borderRadius: 30
     // marginBottom: 10
   },
   polizaContainer: {
