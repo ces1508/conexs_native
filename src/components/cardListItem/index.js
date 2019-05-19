@@ -11,7 +11,7 @@ const Card = props => {
     <TouchableWithoutFeedback onPress={props.onPress}>
       <View style={styles.container}>
         <View style={styles.containerImage}>
-          <Image source={{ uri: 'https://picsum.photos/320/320?image=0' }} style={styles.image} />
+          <Image source={{ uri: props.image }} style={styles.image} />
         </View>
         <View style={styles.containerText}>
           {props.children}
