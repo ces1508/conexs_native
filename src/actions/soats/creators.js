@@ -50,7 +50,6 @@ function onSuccessLodingMore (data, skip) {
   return { type: SUCCESS_PAGINATION_SOATS, data, skip }
 }
 function handleSuccess (data) {
-  console.log('DATA SOATS ===========', data)
   return { type: SUCCESS_GET_SOATS, data }
 }
 

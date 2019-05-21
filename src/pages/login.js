@@ -7,7 +7,8 @@ import {
   Text,
   Alert,
   KeyboardAvoidingView,
-  Keyboard
+  Keyboard,
+  ScrollView
 } from 'react-native'
 import Input from '../components/input'
 import Button from '../components/button'
@@ -95,27 +96,31 @@ class LoginScreen extends Component {
   render () {
     let { onLogin, value } = this.props
     return (
-      <KeyboardAvoidingView style={styles.container} behavior='padding' enabled>
-        <StatusBar backgroundColor={theme.colors.blue} />
-        <View style={styles.containerImage}>
-          <Image style={this.state.keyboard ? styles.hide : styles.image} source={require('../img/horizontal-logo.png')} resizeMode='stretch' resizeMethod='scale' />
-        </View>
-        <View style={styles.form}>
-          <Text style={[styles.text, styles.welcome]}>Bienvenido</Text>
-          <Text style={styles.text}>Número de documento, Nit</Text>
-          <Text style={styles.text}>o Placa de su vehículo</Text>
-          <Input
-            name={'document'}
-            value={value}
-            style={styles.input}
-            label=''
-            handleText={this.props.handleInput}
-          />
-        </View>
-        <Button style={styles.button} text={onLogin ? '...Iniciando sesión' : 'Entrar'} textStyle={styles.buttonText} onPress={this.onSubmit} />
-        <View style={styles.footer}>
-          <Text style={this.state.keyboard ? styles.hide : [styles.text, styles.footerText]}>Màs Informaciòn</Text>
-        </View>
+      <KeyboardAvoidingView style={styles.container} enabled>
+        <ScrollView style={{ flex: 1 }}>
+          <StatusBar backgroundColor={theme.colors.blue} />
+          <View style={styles.containerImage}>
+            <Image style={this.state.keyboard ? styles.hide : styles.image} source={require('../img/horizontal-logo.png')} resizeMode='stretch' resizeMethod='scale' />
+          </View>
+          <View style={styles.form}>
+            <Text style={[styles.text, styles.welcome]}>Bienvenido</Text>
+            <Text style={styles.text}>Número de documento, Nit</Text>
+            <Text style={styles.text}>o Placa si es un vehículo</Text>
+            <Input
+              name={'document'}
+              value={value}
+              style={styles.input}
+              label=''
+              handleText={this.props.handleInput}
+            />
+            <Button style={styles.button} text={onLogin ? '...Iniciando sesión' : 'Entrar'} textStyle={styles.buttonText} onPress={this.onSubmit} />
+          </View>
+          {
+            // <View style={styles.footer}>
+            //   <Text style={this.state.keyboard ? styles.hide : [styles.text, styles.footerText]}>Màs Informaciòn</Text>
+            // </View>
+          }
+        </ScrollView>
       </KeyboardAvoidingView>
     )
   }
@@ -124,17 +129,14 @@ class LoginScreen extends Component {
 export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)
 
 const styles = StyleSheet.create({
-  containerScroll: {
-    backgroundColor: theme.colors.blue,
-    flex: 1
-  },
   container: {
-    paddingHorizontal: 15,
     flex: 1,
+    paddingHorizontal: 15,
     backgroundColor: theme.colors.blue
   },
   containerImage: {
-    marginTop: 50
+    flex: 1,
+    paddingVertical: 20
   },
   image: {
     height: 80,
@@ -144,8 +146,8 @@ const styles = StyleSheet.create({
   form: {
     marginTop: 20,
     borderRadius: 10,
-    paddingBottom: 20,
-    backgroundColor: theme.colors.lightBlue
+    backgroundColor: theme.colors.lightBlue,
+    paddingVertical: 15
   },
   welcome: {
     fontSize: theme.sizes.title,
@@ -167,8 +169,9 @@ const styles = StyleSheet.create({
     borderTopWidth: 3,
     marginTop: 20,
     backgroundColor: theme.colors.button,
-    height: 70,
-    borderRadius: 7
+    height: 50,
+    borderRadius: 7,
+    marginBottom: 70
   },
   buttonText: {
     color: theme.colors.shadowButton,
@@ -180,11 +183,11 @@ const styles = StyleSheet.create({
   },
   footer: {
     backgroundColor: theme.colors.lightBlue,
-    position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    height: 60
+    height: 40,
+    flex: 1
   },
   footerText: {
     textAlignVertical: 'center',

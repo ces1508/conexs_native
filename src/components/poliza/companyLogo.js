@@ -67,7 +67,7 @@ const Logo = props => {
   return (
     <View>
       <Image
-        resizeMode='stretch'
+        resizeMode='contain'
         style={[
           styles.image,
           { backgroundColor: company.includes('bolivar') ? 'green' : 'white' }
@@ -79,8 +79,8 @@ const Logo = props => {
 
 const styles = StyleSheet.create({
   image: {
-    width: 60,
-    height: 60
+    width: 80,
+    height: 80
   }
 })
 

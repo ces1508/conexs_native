@@ -1,23 +1,6 @@
 import axios from 'axios'
 import setup from './config'
 
-axios.interceptors.request.use(config => {
-  console.log(config)
-  return config
-}, err => {
-  console.log('error ============' , err)
-  return Promise.reject(err)
-})
-
-axios.interceptors.response.use(res => {
-  console.log('========= response ========= ', res)
-  return res
-}, err => {
-  console.log('======== error response =========', err)
-  return Promise.reject(err)
-})
-
-
 class Datasource {
   constructor (config) {
     this.apiUrl = config.apiUrl
