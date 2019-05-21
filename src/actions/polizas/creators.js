@@ -32,7 +32,9 @@ export const handleRefreshing = (token, filters) => {
 }
 
 const makeRequest = async (token, skip, filters, dispatch, handleSuccess, handleError) => {
+  console.log('=============== action polizas ===============')
   let { data, status } = await Datasource.getPolizas(token, 'polizas', { skip, ...filters })
+  console.log(' ========== getting polizas ======= data', data)
   if (status !== 200) {
     if (status === 413 || status === 401) return dispatch(handleError({ message: 'UnAuthorizade' }))
     if (status >= 500) {

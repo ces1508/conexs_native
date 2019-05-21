@@ -1,56 +1,87 @@
 import axios from 'axios'
 import setup from './config'
 
+axios.interceptors.request.use(config => {
+  console.log(config)
+  return config
+}, err => {
+  console.log('error ============' , err)
+  return Promise.reject(err)
+})
+
+axios.interceptors.response.use(res => {
+  console.log('========= response ========= ', res)
+  return res
+}, err => {
+  console.log('======== error response =========', err)
+  return Promise.reject(err)
+})
+
+
 class Datasource {
   constructor (config) {
     this.apiUrl = config.apiUrl
   }
 
-  async makeRequest (url, method = 'get', body = {}, params = {}, headers = {}) {
+  async makeRequest (url, method = 'GET', body = null, params = null, headers = {}) {
     try {
-      let response = await axios({
-        method: method,
-        url: `${this.apiUrl}/${url}`,
-        data: body,
-        params,
-        headers
-      })
-      console.log(response)
-      return { data: response.data, status: response.status }
+      let options = {
+        headers: {
+          'Content-Type': 'application/json',
+          ...headers
+        },
+        method
+      }
+      if (body) options.body = JSON.stringify(body)
+      let fullPath = `${this.apiUrl}/${url}`
+      if (params) {
+        fullPath = `${fullPath}?${this.getQueryString(params)}`
+      }
+      console.log(fullPath)
+      let response = await fetch(fullPath, options)
+      let json = await response.json()
+      return { data: json, status: response.status }
     } catch (e) {
-      console.log(e.response)
+      console.log(e)
       return { data: e.response.data, status: e.response.status }
     }
+  }
+
+  getQueryString(params) {
+    var esc = encodeURIComponent;
+    return Object.keys(params)
+      .map(k => esc(k) + '=' + esc(params[k]))
+      .join('&');
   }
 
   signin (data) {
     return this.makeRequest('auth', 'POST', data)
   }
   getPolizas (token, path = 'polizas', params) {
-    console.log(params)
-    return this.makeRequest(path, 'get', {}, { ...params }, {
+    return this.makeRequest(path, 'GET', null, { ...params }, {
       'Authorization': `Bearer ${token}`
     })
   }
   getProfile (token) {
-    return this.makeRequest('profile', 'get', {}, {}, {
+    return this.makeRequest('profile/', 'GET', null, null, {
       'Authorization': `Bearer ${token}`
     })
   }
   getSinisters (token, poliza) {
-    return this.makeRequest(`siniestros/${poliza}`, 'get', {}, {}, {
+    return this.makeRequest(`siniestros/${poliza}`, 'GET', null, null, {
       'Authorization': `Bearer ${token}`
     })
   }
   notifications (token, skip) {
-    return this.makeRequest('notifications', 'get', {}, { skip }, {
+    return this.makeRequest('notifications', 'GET', null, { skip }, {
       'Authorization': `Bearer ${token}`
     })
   }
   savePushToken (token, regId) {
-    return this.makeRequest('devices', 'post', { regId }, {}, {
+    return this.makeRequest('devices', 'post', { regId }, null, {
       'Authorization': `Bearer ${token}`
     })
+    return true
   }
   async sendEmail (data) {
     try {

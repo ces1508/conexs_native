@@ -34,8 +34,11 @@ const Tabs = createBottomTabNavigator({
         }}>{ label }</Text>
       ),
       tabBarOptions: {
-        activeTintColor: Theme.colors.yellow,
-        inactiveTintColor: 'gray'
+        activeTintColor: Theme.colors.white,
+        inactiveTintColor: 'gray',
+        style: {
+          backgroundColor: Theme.colors.blue,
+       }
       }
     }
   }
@@ -60,8 +63,8 @@ const Stack = (isAuthenticate = false) => {
       screen: DrawerNavivagor,
       navigationOptions: ({ navigation }) => ({
         title: 'Polizas',
-        headerLeft: <MenuIcon navigation={navigation} />,
-        headerRight: <NotificationIcon navigation={navigation} />
+        headerLeft: <MenuIcon navigation={navigation} color={Theme.colors.white} />,
+        headerRight: <NotificationIcon navigation={navigation} color={Theme.colors.white} />
       })
     },
     polizaDescription: {
@@ -87,6 +90,12 @@ const Stack = (isAuthenticate = false) => {
     }
   }, {
     headerMode: 'screen',
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: Theme.colors.blue,
+      },
+      headerTintColor: Theme.colors.white
+    },
     initialRouteName: isAuthenticate ? 'polizas' : 'login'
   })
 }

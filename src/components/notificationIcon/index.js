@@ -16,6 +16,7 @@ const NotificationIcon = (props) => {
       <Icon
         name='bell-outline'
         // style={{ padding: 10 }}
+        {...props}
         size={35}
         onPress={() => props.navigation.navigate('notifications')} />
     </View>

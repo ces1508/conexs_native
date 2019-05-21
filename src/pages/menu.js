@@ -38,7 +38,9 @@ class MenuScreen extends Component {
 
   async onIds (device) {
     let { item } = await getItem('@user')
-    await Datasource.savePushToken(item, device.pushToken)
+    if (item) {
+      await Datasource.savePushToken(item, device.pushToken)
+    }
   }
 
   _onNotification (n) {
@@ -75,27 +77,24 @@ class MenuScreen extends Component {
     let { profile } = this.props
     return (
       <ScrollView style={{ flex: 1 }}>
-        <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }} style={{ flex: 1 }}>
+        <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }} style={{ flex: 1, padding: 0, margin: 0 }}>
+          <View style={styles.userInformation}>
+            <Text
+              style={[styles.text, styles.textHeader, styles.name]}
+              numberOfLines={1}>
+              {profile.titular || 'cargando'}
+            </Text>
+            <Text style={[styles.text, styles.textHeader]}>{profile.cedula_nit || 'cargando'}</Text>
+          </View>
+          <View style={styles.polizaContainer}>
+            <Text style={styles.text}>Polizas Activas</Text>
+            <Text style={[styles.poliza, styles.active]}>{profile.actives || 0}</Text>
+          </View>
+          <View style={styles.polizaContainer}>
+            <Text style={styles.text}>Polizas Inactivas</Text>
+            <Text style={[styles.poliza, styles.inactive]}>{profile.inactives || 0}</Text>
+          </View>
           <View>
-            <View style={styles.userInformation}>
-              <Image style={styles.image} source={{ uri: 'https://picsum.photos/320/320' }} />
-              <Text
-                style={[styles.text, styles.textHeader, styles.name]}
-                numberOfLines={1}>
-                {profile.titular || 'cargando'}
-              </Text>
-              <Text style={[styles.text, styles.textHeader]}>{profile.cedula_nit || 'cargando'}</Text>
-            </View>
-            <View>
-              <View style={styles.polizaContainer}>
-                <Text style={styles.text}>Polizas Activas</Text>
-                <Text style={[styles.poliza, styles.active]}>{profile.actives || 0}</Text>
-              </View>
-              <View style={styles.polizaContainer}>
-                <Text style={styles.text}>Polizas Inactivas</Text>
-                <Text style={[styles.poliza, styles.inactive]}>{profile.inactives || 0}</Text>
-              </View>
-            </View>
             <TouchableOpacity onPress={() => this.handleLogout()}>
               <Text style={[styles.singout, styles.text]}>Salir</Text>
             </TouchableOpacity>
@@ -114,25 +113,26 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: theme.colors.lightBlue
+    backgroundColor: theme.colors.blue
   },
   image: {
     width: 0,
     height: 0,
-    borderRadius: 30,
+    // borderRadius: 30,
     // marginBottom: 10
   },
   polizaContainer: {
     flexDirection: 'row',
     paddingVertical: 10,
     justifyContent: 'space-between',
-    marginHorizontal: 10
+    marginHorizontal: 10,
+    backgroundColor: theme.colors.white
   },
   textHeader: {
     color: theme.colors.white
   },
   name: {
-    fontSize: 16
+    fontSize: 16,
   },
   text: {
     fontSize: 18,
