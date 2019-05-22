@@ -6,7 +6,7 @@ const MenuIcon = (props) => {
     <Icon
       name='menu'
       {...props}
-      size={35} onPress={() => props.navigation.dispatch(DrawerActions.toggleDrawer())} />
+      size={35} onPress={() => props.navigation.dispatch(DrawerActions.openDrawer())} />
   )
 }
 
