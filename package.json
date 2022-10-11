@@ -9,7 +9,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "react": "16.6.3",
-    "react-native": "0.57.8",
+    "react-native": "0.70.2",
     "react-native-drawer": "^2.5.1",
     "react-native-gesture-handler": "^1.0.12",
     "react-native-immediate-phone-call": "git+https://github.com/wumke/react-native-immediate-phone-call.git",
